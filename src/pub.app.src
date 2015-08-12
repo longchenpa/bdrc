@@ -1,0 +1,9 @@
+{application, pub, [
+    {description,  "PUB nying.ma Publishing System"},
+    {vsn,          "0.8"},
+    {applications, [kernel, stdlib, nitro]},
+    {modules, []},
+    {registered,   []},
+    {mod, { pub, []}},
+    {env, []}
+]}.
