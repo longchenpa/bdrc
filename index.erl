@@ -160,7 +160,7 @@
                 "Collection of treasure revelation texts by Godzin Terston Yeshes Jungnas(1875-?).",
                 [ { ver, 'W3PD991', "I3PD1072-I3PD1079" } ] },
 
-        { pub,  'Gedon Gyatso Tercho', 2, "nges don rgya mtsho'i gter chos", '/',
+        { pub,  'Ngedon Gyatso Tercho', 2, "nges don rgya mtsho'i gter chos", '/',
                 "Collection of treasure revelation texts by Sangprul Ngesdon Gyatsho (1899-1958).",
                 [ { ver, 'W3PD996', "I3PD1421-I3PD1422" } ] },
 
@@ -455,6 +455,10 @@
                 "a terton from Nangchen in Kham.",
                 [ { ver, 'W21576', "2790-2797" } ] },
 
+        { pub,  'Nyengyud Trichen Chusum Kor', 13, "snyan brgyud khrid chen bcu gsum skor", '/',
+                "Cycle of special instructions on Nyingma practices. In use at Katok Monastery.",
+                [ { ver, 'W30199', "5994-6006" } ] },
+
         { pub,  'Lagla Sonam Chodrub', 5, "glag bla bsod nams chos grub", '/',
                 "Collected works of a Nyingma master from Kham, Lagla Sonam Chodrub (1862-1944).",
                 [ { ver, 'W22389', "791-795" } ] },
@@ -475,6 +479,15 @@
                 "cycles of Peyu Monastery.",
                 [ { ver, 'W21578', "1662-1674" } ] },
 
+        { pub,  'Khenpo Zhenga Chusum', 7, "gzhung chen bcu gsum", '/',
+                "These thirteen basic sutras and shastras were widely regarded as essential"
+                "for the proper understanding of exoteric Buddhism. The annotations are the"
+                "work of Khenpo Shenga or Shenpen Chokyi Nangwa (1871-1927) who vowed to"
+                "avoid the various differing Tibetan interpretations that had resulted"
+                "in the sectarianism in Tibet. These annotated editions became known as"
+                "the Dzongsar Yigcha or syllabus and spread throughout all of Tibet.",
+                [ { ver, 'W23198', "801-807" } ] },
+
         { pub,  'Dudjom Rinpoche', 25, "bdud 'joms 'jigs bral ye shes rdo rje", '/',
                 "Collected works of a extraordinary savant of the 20th century,"
                 "Dudjom Jigdral Yeshe Dorje (1904-1988).",
@@ -483,7 +496,7 @@
 ]},
 { cat, "RIME", "", '/', [
 
-        { pub,  'Choklin Tersar', 39, "mchog 'gyur gling pa'i gter gsar", '/',
+        { pub,  'Chokgyur Lingpa', 39, "mchog 'gyur gling pa'i gter gsar", '/',
                 "Chogyur Dechen Lingpa (1829-1870) was one of a Nyingma terton whose"
                 "revelations spread widely throughout Tibet and remain today among the most important"
                 "teachings of Tibet. He is regarded as one of the three pillars of the Rime or non-sectarian"
@@ -495,14 +508,6 @@
                 "Dilgo Kyentse Rabsal Dawa (1910-1991).",
                 [ { ver, 'W21809', "1831-1855" } ] },
 
-        { pub,  'Dzongsar Yigcha', 7, "gzhung chen bcu gsum", '/',
-                "These thirteen basic sutras and shastras were widely regarded as essential"
-                "for the proper understanding of exoteric Buddhism. The annotations are the"
-                "work of Khenpo Shenga or Shenpen Chokyi Nangwa (1871-1927) who vowed to"
-                "avoid the various differing Tibetan interpretations that had resulted"
-                "in the sectarianism in Tibet. These annotated editions became known as"
-                "the Dzongsar Yigcha or syllabus and spread throughout all of Tibet.",
-                [ { ver, 'W23198', "801-807" } ] },
 
         { pub,  'Dzongsar Yigcha Chatab', 1, "gzhung chen bcu gsum gyi 'chad thabs", '/',
                 "Surmang Kenpo Pema Namgyal wrote this teacher's manual to guide"
@@ -514,7 +519,8 @@
                 "Kyentse Wangpo (1820-1892), another of the three pillars of the Rime tradition. His"
                 "collected works reflect contain many of his notes and contain insights into his thinking on"
                 "ecumenical approach.",
-                [ { ver, 'W21807', "0506-0529" } ] },
+                [ { ver, 'W21807', "0506-0529" },
+                  { ver, 'W3PD1002', "I3PD1037-I3PD1061" } ] },
 
         { pub,  'Dzongsar Kyentse Jamyang Chokyi Lodro', 10, "'jam dbyangs mkhyen brtse chos kyi blo gros", '/',
                 "One of the greatest teachers of the 20th century was Dzongsar Kyentse"
@@ -535,7 +541,7 @@
 
         { pub,  '', 1, "theg pa chen po rgyud bla ma'i bstan bcos snying po'i"
                         "don mngon sum lam gyi bshad pa srol dang sbyar ba'i"
-                        "rnam par 'grel ba phyir mi ldog pa sengge'i nga ro", '/',
+                        "rnam par 'grel ba phyir mi ldog pa seng ge'i nga ro", '/',
                 "Commentary on the Uttaratantra or Ratnagotravibhaga by"
                 "Jamgon Kontrul Lotro Taye (1813-1893)",
                 [ { ver, 'W21961', "1715" } ] },
@@ -761,7 +767,7 @@
                 "Collected writings of a Gelug master, the Second Panchen Lobzang Yeshe (1662-1737)",
                 [ { ver, 'W01174', "1794, 1793, 1792, 1791" } ] },
 
-        { pub,  '', 5, "(gsung 'bum) of blo bzan chos kyi rgyal mtshan", '/',
+        { pub,  '', 5, "(gsung 'bum) blo bzan chos kyi rgyal mtshan", '/',
                 "Collected writings of the 1st Panchen Lama Lobzang Chokyi Gyaltsen (1570-1662),"
                 "famed master of the Tashilhunpo tradition of the Gelug school",
                 [ { ver, 'W23430', "1637, 1638, 1639, 1640, 2765" } ] },
@@ -1057,7 +1063,7 @@
                 "of the Chogling Tersar.",
                 [ { ver, 'W22139', "787-790" } ] },
 
-        { pub,  '', 1, "thugs rje chen po'i dmar khrid phyag rdzogs zun 'jug gi don'dus go bder bkod pa rgan mo mdzub tshugs", '/',
+        { pub,  '', 1, "thugs rje chen po'i dmar khrid phyag rdzogs zun 'jug gi don 'dus go bder bkod pa rgan mo mdzub tshugs", '/',
                 "An introduction on the practice of avalokitesvara,"
                 "according to a fusion of rdzogs-chen and phyag chen"
                 "Introduction to the practice of a form of Avalokitesvara"

@@ -44,7 +44,9 @@ tex(Folder,Name) ->
 tex2(F,Ext) -> filename:basename(F, ".tex") ++ Ext.
 
 %main(A) -> mad_repl:main(A,[]).
-main(A) -> run(A).
+main(A) -> 
+    ok = io:setopts(standard_io, [{encoding, unicode}]),
+    run(A).
 
 to_list('') -> "";
 to_list(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ " ";
@@ -70,6 +72,13 @@ publish(Files) ->
 output() -> {fun outputCat/3, fun outputPub/3}.
 search() -> {fun searchCat/3, fun searchPub/3}.
 
+run([])           -> io:format("PUB nying.ma Publishing System ~n"),
+                     io:format("Usage:~n"),
+                     io:format("   pub i          -- print index~n"),
+                     io:format("   pub s <text>   -- search in index~n"),
+                     io:format("   pub tex <file> -- publish TeX file~n"),
+                     io:format("   pub tex        -- publish folder with TeX, DCT, TXT~n"),
+                     false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
 run(["i"])    -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
 run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
@@ -85,7 +94,9 @@ indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 outputCat(Depth,{cat,Name,Desc,Path,List},S) ->
     indent(Depth), io:format("+-- ~s ~w~n",[to_list(Name),Path]), [].
 outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
-    indent(Depth), io:format("+-- ~s:~w ~s ~s~n",[to_list(Name),Num,Wylie,ver(Ver)]), [].
+    indent(Depth), X = io:format("+-- ~s:~w ~ts ~s~n",[to_list(Name),Num,%Wylie,
+                                                                         wylie:tibetan(Wylie),
+                                                                         ver(Ver)]), [].
 
 searchCat(Depth,{cat,Name,Desc,Path,List}=Cat,S) ->
     case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc]]) of 0 -> []; N -> [{cat,Name,Desc,Path,[]}] end.
