@@ -77,6 +77,15 @@
                 [ { ver, 'W1KG16648', "" },
                   { ver, 'W19665', "I1CZ2716" } ] },
 
+        { pub,  'Do Khyentse Yeshe', 11, "mdo mkhyen brtse ye shes rdo rje'i gter chos", '/',
+                "Biography W18047 of Do Kyentse Yeshe Dorje (1800-1859), a 19th century Dzogchen practitioner"
+                "from among the Golok lands. Among his spiritual descendants were many who manifested the 'rainbow body'."
+                "Collected Treasure Revelations by a Nyingma master from Kham, Do Khyentse Yeshe Dorje (1800-1866) W1PD89990."
+                "",
+                [ { ver, 'W18047', "0180" },
+                  { ver, 'W26033', "I1KG2906" },
+                  { ver, 'W1PD89990', "I1PD90035-I1PD90043" } ] },
+
         { pub,  'Ranrig Dorje Tercho', 42, "nyag bla rang rig rdo rje'i gter chos", '/',
                 "Collected Treasure Revelations by a modern visionary"
                 "from Nyarong, Rangrik Dorje (1847-1903).",
