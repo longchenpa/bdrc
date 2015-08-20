@@ -46,9 +46,11 @@ tex2(F,Ext) -> filename:basename(F, ".tex") ++ Ext.
 %main(A) -> mad_repl:main(A,[]).
 main(A) -> run(A).
 
-run(A) ->
-    List = case A of [] -> mad_repl:wildcards(["*.tex"]); _File -> [_File] end,
-    io:format("Parameters: ~p~n",[A]),
+to_list('') -> "";
+to_list(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ " ";
+to_list(L) -> L.
+
+publish(Files) ->
     io:format("Current Directory: ~p~n",[mad_utils:cwd()]),
     [ begin
         Tex = tex(".",File),
@@ -63,5 +65,32 @@ run(A) ->
         sh:run("xelatex --interaction nonstopmode \"temp.tex\""),
         sh:run("hevea \""++ File ++"\" -o \"" ++ tex2(File,".htm") ++ "\""),
         file:rename("temp.pdf",tex2(File,".pdf"))
-      end || File <- List, File /= "synrc.tex", File /= "temp.tex"],
-    false.
+      end || File <- Files, File /= "synrc.tex", File /= "temp.tex"].
+
+output() -> {fun outputCat/3, fun outputPub/3}.
+search() -> {fun searchCat/3, fun searchPub/3}.
+
+run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
+run(["i"])    -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
+run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
+run(["tex",File]) -> publish([File]), false.
+
+ver(Versions) -> string:join(lists:foldl(fun({ver,Work,Pages},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                            (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                            ({ver,Work,Pages},Acc) when is_list(Work) -> [ver(Work)|Acc] end,[],Versions),"").
+
+indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
+
+outputCat(Depth,{cat,Name,Desc,Path,List},S) ->
+    indent(Depth), io:format("+-- ~s ~w~n",[to_list(Name),Path]), [].
+outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
+    indent(Depth), io:format("+-- ~s:~w ~s ~s~n",[to_list(Name),Num,Wylie,ver(Ver)]), [].
+
+searchCat(Depth,{cat,Name,Desc,Path,List}=Cat,S) ->
+    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc]]) of 0 -> []; N -> [{cat,Name,Desc,Path,[]}] end.
+searchPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver}=Pub,S) ->
+    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc,Wylie]]) of 0 -> []; N -> [Pub] end.
+
+fold(Depth,List,{Fun1,Fun2},S) ->
+    lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> [Acc|[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]];
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Acc|Fun2(Depth,Pub,S)] end, [], List).
