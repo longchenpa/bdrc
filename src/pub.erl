@@ -75,9 +75,10 @@ run(["i"])    -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), fa
 run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
 run(["tex",File]) -> publish([File]), false.
 
-ver(Versions) -> string:join(lists:foldl(fun({ver,Work,Pages},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+ver(Versions) -> string:join(unver(Versions),"").
+unver(Versions) -> lists:foldl(fun({ver,Work,Pages},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
                                             (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
-                                            ({ver,Work,Pages},Acc) when is_list(Work) -> [ver(Work)|Acc] end,[],Versions),"").
+                                            ({ver,Work,Pages},Acc) when is_list(Work) -> [ver(Work)|Acc] end,[],Versions).
 
 indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 
@@ -89,7 +90,7 @@ outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
 searchCat(Depth,{cat,Name,Desc,Path,List}=Cat,S) ->
     case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc]]) of 0 -> []; N -> [{cat,Name,Desc,Path,[]}] end.
 searchPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver}=Pub,S) ->
-    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc,Wylie]]) of 0 -> []; N -> [Pub] end.
+    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc,Wylie]++unver(Ver)]) of 0 -> []; N -> [Pub] end.
 
 fold(Depth,List,{Fun1,Fun2},S) ->
     lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> [Acc|[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]];
