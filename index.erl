@@ -786,14 +786,14 @@
                 "Lama Gendun Drub (1391-1474); scanned from a recent Tashi Lhunpo edition.",
                 [ { ver, 'W24769', "3843-3847" } ] },
 
-        { pub,  '', 25, "dalai Lama 5 ngag dbang blo bzang rgya mtsho'i gsung 'bum", '/',
+        { pub,  '', 25, "dalai lama 5 ngag dbang blo bzang rgya mtsho'i gsung 'bum", '/',
                 "Collected works of the 5th Dalai Lama Ngagwang Lobzang Gyatso (1617-1682);"
                 "this edition does not include the three volume supplement to his autobiography by Desi"
                 "Sangye Gyatso, which is included with some of the other editions. This collection"
                 "includes his rare and restricted Nyingma writings but not the Sangwa Gyachen collection.",
                 [ { ver, 'W00294', "1804, 1807-1830" } ] },
 
-        { pub,  '', 13, "dalai Lama 7 blo bzang bskal bzang rgya mtsho'i gsung 'bum", '/',
+        { pub,  '', 13, "dalai lama 7 blo bzang bskal bzang rgya mtsho'i gsung 'bum", '/',
                 "The Seventh Dalai Lama Lobzang Kalsang Gyatso (1708-1757) was one of the"
                 "truly great Gelug masters whose sungbum contains some of the most highly regarded"
                 "commentaries in the Gelug tradition. The prints reproduced in the TBRC were clear"
