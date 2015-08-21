@@ -10,6 +10,44 @@ ext("pdf") -> "PDF";
 ext("txt") -> "TXT UTF-8";
 ext("dct") -> "TibetDoc".
 
+tbrc_work(A) -> string:to_lower(hd(A)) == $w.
+
+scan(Path,Result) ->
+    Components   = string:tokens(Path,"/"),
+    Wildcard     = lists:concat([Path,"/*"]),
+    Files        = mad_repl:wildcards([Wildcard]),
+    Parent       = hd(lists:reverse(Components)),
+    ParentParent = hd(tl(lists:reverse(Components))),
+    {OnlyDirs,HasPub} = lists:foldl(fun(A,{F,P}) ->
+                {F andalso filelib:is_dir(A), P orelse filename:basename(A) == "pub"} end,
+                {true,false},Files),
+    case (OnlyDirs orelse HasPub) of
+         true  -> Res = lists:flatten([ scan(lists:concat([Path,"/",filename:basename(F)]),[]) || F <- Files, filelib:is_dir(F) ]),
+                   case lists:all(fun({ver,_,_}) -> true;
+                                     (_) -> false end, Res) of
+                        true  ->  [ { pub, Parent, vers_size(Res), "", ParentParent, "", Res } | Result ];
+                        false ->  [ { cat, Parent, "", ParentParent, Res }    | Result ] end;
+         false -> case tbrc_work(Parent) of
+                      true  -> [ { ver, list_to_atom(Parent), tbrc_files(Path) } | Result ];
+                      false -> ScannedFiles = tbrc_files(Path),
+                               [ { pub, Parent, print_size(files_size(ScannedFiles)), "", ParentParent, "", Files } | Result ] end end.
+
+print_size(Size) when Size > 1000000000 -> io_lib:format("~.1fG",[Size/1000000000]);
+print_size(Size) when Size > 1000000    -> io_lib:format("~.1fM",[Size/1000000]);
+print_size(Size) when Size > 1000       -> io_lib:format("~.1fK",[Size/1000]);
+print_size(Size) when Size > 0          -> io_lib:format("~.1fB",[Size]);
+print_size(Size) -> "0".
+
+files_size(Files) -> lists:sum([ filelib:file_size(F) || F <- Files]).
+vers_size(Versions) -> print_size(lists:sum([ files_size(Files) || {ver,_,Files} <- Versions])).
+
+tbrc_size({ver,_,Files}) -> files_size(Files);
+tbrc_size({pub,_,_,_,_,_,Files}) -> lists:sum([ F || F <- Files]).
+tbrc_files(Path) ->
+    [ F || F <- mad_repl:wildcards([lists:concat([Path,"/*.{pdf,PDF}"])]),
+                  not filelib:is_dir(F),
+                  lists:sum([string:str(filename:basename(F),nitro:to_list(X))||X<-lists:seq(0,9)]) > 0 ].
+
 menu(File,Author) ->
    Files = mad_repl:wildcards([tex2(File,".{htm,pdf,txt,dct}")]),
    #panel{id=navcontainer,
@@ -43,13 +81,13 @@ tex(Folder,Name) ->
 
 tex2(F,Ext) -> filename:basename(F, ".tex") ++ Ext.
 
-%main(A) -> mad_repl:main(A,[]).
 main(A) -> 
     ok = io:setopts(standard_io, [{encoding, unicode}]),
     run(A).
 
 to_list('') -> "";
 to_list(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ " ";
+to_list(Atom) when is_integer(Atom) -> integer_to_list(Atom) ++ " ";
 to_list(L) -> L.
 
 publish(Files) ->
@@ -75,26 +113,33 @@ search() -> {fun searchCat/3, fun searchPub/3}.
 run([])           -> io:format("PUB nying.ma Publishing System ~n"),
                      io:format("Usage:~n"),
                      io:format("   pub i          -- print index~n"),
+                     io:format("   pub d          -- directory scan~n"),
+                     io:format("   pub r          -- REPL~n"),
                      io:format("   pub s <text>   -- search in index~n"),
                      io:format("   pub tex <file> -- publish TeX file~n"),
                      io:format("   pub tex        -- publish folder with TeX, DCT, TXT~n"),
                      false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
-run(["i"])    -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
+run(["i"])        -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
 run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
+run(["d"])        -> %io:format("~p~n",[scan(mad_utils:cwd(),[])]), 
+                     fold(0,scan(mad_utils:cwd(),[]),output(),[]), false;
+run(["r"])        -> mad_repl:main([],[]);
 run(["tex",File]) -> publish([File]), false.
 
 ver(Versions) -> string:join(unver(Versions),"").
 unver(Versions) -> lists:foldl(fun({ver,Work,Pages},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                   ({ver,Work,Pages},Acc) when is_list(Work) -> Acc;
                                             (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                            (Work,Acc) when is_list(Work) -> Acc;
                                             ({ver,Work,Pages},Acc) when is_list(Work) -> [ver(Work)|Acc] end,[],Versions).
 
 indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 
 outputCat(Depth,{cat,Name,Desc,Path,List},S) ->
-    indent(Depth), io:format("+-- ~s ~w~n",[to_list(Name),Path]), [].
+    indent(Depth), io:format("+-- ~s~n",[to_list(Name)]), [].
 outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
-    indent(Depth), X = io:format("+-- ~s:~w ~ts ~s~n",[to_list(Name),Num,%Wylie,
+    indent(Depth), X = io:format("+-- [~6s] ~s ~ts ~s~n",[to_list(Num),to_list(Name),%Wylie,
                                                                          wylie:tibetan(Wylie),
                                                                          ver(Ver)]), [].
 

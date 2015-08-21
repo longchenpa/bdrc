@@ -161,7 +161,7 @@
                 "Collected works of Dorje Dechen Lingpa (1857-1928).",
                 [ { ver, 'W00EGS1016625', "I00EGS1016809-I00EGS1016819" } ] },
 
-        { pub,  'Zhichen Tengye Ling', 69, "khams dkar mdzes rdzong khongs gzhi chen mkhar dmar gsangs sngags bstan rgyas gling du bzhugs pa'i dpe dkon", '/',
+        { pub,  'Zhichen Tengye Ling', 69, "khams dkar mdzes rdzong khongs gzhi chen dgon du bzhugs pa'i dpe dkon", '/',
                 "Collection of rare Texts from Zhichen Monastery in Kardze Couty.",
                 [ { ver, 'W3PD889', "I3PD1129-I3PD1197" } ] },
 
@@ -418,7 +418,7 @@
                 "century Kathog master, Sonam Gyaltsen.",
                 [ { ver, 'W23926', "3566-3567" } ] },
 
-        { pub,  'Sonam Gyaltsen Namtar', 1, "shar kaHthog pa bsod nams rgyal mtshan dpal bzang po'i rnam par thar pa dri med yid bzhin nor bu'i phreng ba", '/',
+        { pub,  'Sonam Gyaltsen Namtar', 1, "shar kaHthog pa bsod nams rgyal mtshan dpal bzang po'i rnam par thar pa", '/',
                 "Biography of Katok Sonam Gyaltsen, a teacher of the Katok order "
                 "of the Nyingma who was active in Sikkim and Bhutan in the 17th century. "
                 "From an original manuscript preserved in the Burmiok Library. "
@@ -646,15 +646,12 @@
                 "Kagyu; the Shiche and Cho; the Kalachakra; and the Ugyen Nyendrub.",
                 [ { ver, 'W20877', "0132-0149" } ] },
 
-        { pub,  '', 1, "theg pa chen po rgyud bla ma'i bstan bcos snying po'i"
-                        "don mngon sum lam gyi bshad pa srol dang sbyar ba'i"
-                        "rnam par 'grel ba phyir mi ldog pa seng ge'i nga ro", '/',
+        { pub,  '', 1, "rgyud bla ma'i 'grel chen", '/',
                 "Commentary on the Uttaratantra or Ratnagotravibhaga by"
                 "Jamgon Kontrul Lotro Taye (1813-1893)",
                 [ { ver, 'W21961', "1715" } ] },
 
-        { pub,  '', 1, "dpal dgyes pa rdo rje'i rgyud kyi rgyal po brtag pa gnyis pa'i"
-                       "tshig don rnam par 'grol ba gzhom med rdo rje'i gsang ba 'byed pa", '/',
+        { pub,  '', 1, "kye rdor tshig don rnam par 'grol ba", '/',
                 "Commentary on the Hevajratantra by Jamgon Kongtrul Lotro Taye (1813-1899)",
                 [ { ver, 'W20866', "1716" } ] }
 ]},
