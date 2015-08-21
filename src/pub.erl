@@ -139,7 +139,7 @@ indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 outputCat(Depth,{cat,Name,Desc,Path,List},S) ->
     indent(Depth), io:format("+-- ~s~n",[to_list(Name)]), [].
 outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
-    indent(Depth), X = io:format("+-- [~6s] ~s ~ts ~s~n",[to_list(Num),to_list(Name),%Wylie,
+    indent(Depth), X = io:format("+-- ~s ~s ~ts ~s~n",[to_list(Name),to_list(Num),%Wylie,
                                                                          wylie:tibetan(Wylie),
                                                                          ver(Ver)]), [].
 
