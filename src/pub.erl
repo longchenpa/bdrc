@@ -25,12 +25,12 @@ scan(Path,Result) ->
          true  -> Res = lists:flatten([ scan(lists:concat([Path,"/",filename:basename(F)]),[]) || F <- Files, filelib:is_dir(F) ]),
                    case lists:all(fun({ver,_,_}) -> true;
                                      (_) -> false end, Res) of
-                        true  ->  [ { pub, Parent, vers_size(Res), "", ParentParent, "", Res } | Result ];
+                        true  ->  [ { pub, Parent, vers_size(Res), "", ParentParent, "", vers_files(Res) } | Result ];
                         false ->  [ { cat, Parent, "", ParentParent, Res }    | Result ] end;
          false -> case tbrc_work(Parent) of
                       true  -> [ { ver, list_to_atom(Parent), tbrc_files(Path) } | Result ];
                       false -> ScannedFiles = tbrc_files(Path),
-                               [ { pub, Parent, print_size(files_size(ScannedFiles)), "", ParentParent, "", Files } | Result ] end end.
+                               [ { pub, Parent, print_size(files_size(ScannedFiles)), "", ParentParent, "", base_files(ScannedFiles) } | Result ] end end.
 
 print_size(Size) when Size > 1000000000 -> io_lib:format("~.1fG",[Size/1000000000]);
 print_size(Size) when Size > 1000000    -> io_lib:format("~.1fM",[Size/1000000]);
@@ -40,7 +40,9 @@ print_size(Size) -> "0".
 
 files_size(Files) -> lists:sum([ filelib:file_size(F) || F <- Files]).
 vers_size(Versions) -> print_size(lists:sum([ files_size(Files) || {ver,_,Files} <- Versions])).
+vers_files(Versions) -> [ [ {ver,A,filename:basename(F)} || F <- Files ] || {ver,A,Files} <- Versions].
 
+base_files(Files) -> [ filename:basename(F) || F <- Files ].
 tbrc_size({ver,_,Files}) -> files_size(Files);
 tbrc_size({pub,_,_,_,_,_,Files}) -> lists:sum([ F || F <- Files]).
 tbrc_files(Path) ->
@@ -110,9 +112,10 @@ publish(Files) ->
 output() -> {fun outputCat/3, fun outputPub/3}.
 search() -> {fun searchCat/3, fun searchPub/3}.
 
-run([])           -> io:format("PUB nying.ma Publishing System ~n"),
+run([])           -> io:format("PUB NYING MA Publishing System ~n"),
                      io:format("Usage:~n"),
                      io:format("   pub i          -- print index~n"),
+                     io:format("   pub dump       -- dump Erlang merged scan/index~n"),
                      io:format("   pub d          -- directory scan~n"),
                      io:format("   pub r          -- REPL~n"),
                      io:format("   pub s <text>   -- search in index~n"),
@@ -122,8 +125,8 @@ run([])           -> io:format("PUB nying.ma Publishing System ~n"),
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
 run(["i"])        -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
 run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
-run(["d"])        -> %io:format("~p~n",[scan(mad_utils:cwd(),[])]), 
-                     fold(0,scan(mad_utils:cwd(),[]),output(),[]), false;
+run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
+run(["d"])        -> fold(0,scan(mad_utils:cwd(),[]),output(),[]), false;
 run(["r"])        -> mad_repl:main([],[]);
 run(["tex",File]) -> publish([File]), false.
 

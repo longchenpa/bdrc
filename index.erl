@@ -1,10 +1,12 @@
 [ { cat, "CANON", "", '/', [
 
         { pub,  'Gyud Chudun', 2, "rnying ma rgyud bcu bdun", '/',
-                "A reproduction of an ancient manuscript from spiti of a collection of rnying "
-                "ma pa tantras of the man ngag sde class of the atiyoga (rdzogs chen) as known as 17 tantras of Mengagde",
-                [ { ver, 'W21520', "I1KG1235-I1KG1236"},
-                  { ver, 'W27491', "4447-4448"}]},
+                "A reproduction of an ancient manuscript from Spiti of a collection of rnying "
+                "ma pa tantras of the man ngag sde class of the atiyoga (rdzogs chen) as known "
+                "as 17 tantras of Mengagde",
+                [ { ver, 'W1KG11703', "I1KG11710-I1KG11713" },
+                  { ver, 'W21520', "I1KG1235-I1KG1236"},
+                  { ver, 'W27491', "4447-4448"} ] },
 
         { pub,  'Kangyur Dege', 103, "bka' 'gyur (sde dge par phud)", '/',
                 "The Derge Parpu redaction of the Kangyur was edited with great care by Situ "
