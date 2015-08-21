@@ -192,6 +192,13 @@
                 [ { ver, 'W3PD989', "I3PD1081-I3PD1090" },
                   { ver, 'W1KG16650', "I2PD15103-I2PD15112" } ] },
 
+        { pub,  'Kathok Kama', 120, "bka' ma shin tu rgyas pa (kaH thog)", '/',
+                "Kama recently compiled at Katok Monastery by students of Khenpo Munsel"
+                "and Khenpo Jamyang. At twice the size of the Dudjom edition,"
+                "it contains many rare Nyingma treatises on Mahayoga, Anuyoga, and Atiyoga"
+                "that heretofore had never been seen outside of Tibet.",
+                [ { ver, 'W25983', "3906-4025" } ] },
+
         { pub,  'Nyingma Kama', 58, "rnying ma bka' ma rgyas pa", '/',
                 "The collection of Kama or commentatorial literature descending in a direct"
                 "tradition from the teachers at the time of the introduction to Tibet of the Nyingma"
@@ -210,6 +217,10 @@
                 "great Ngadag Nyaral Nyima Ozer (1136-1204). This set represents the manuscript"
                 "tradition found in Bhutan and is the exemplar preserved at Tsamdrag Monastery.",
                 [ { ver, 'W22247', "2042-2054" } ] },
+
+        { pub,  'Guru Chowang', 2, "gu ru chos dbang gi rang rnam dang zhal gdams", '/',
+                "The autobiography and instructions of gu ru chos kyi dban phyug",
+                [ { ver, 'W23802', "2829-2830" } ] },
 
         { pub,  'Guru Chowang Kagye', 4, "bka' brgyad gsang ba yongs rdzogs", '/',
                 "Another collection of the the Kagye or Eight Pronouncements of the Mahayoga"
@@ -269,8 +280,11 @@
         { pub,  'Gongpa Zangtal', 5, "rdzogs pa chen po dgongs pa zang thal dang ka dag rang byung rang shar", '/',
                 "Two cycles of Dzogchen practice from the Jangter revelations of"
                 "Rigdzin Gokyi Demtruchen (1337-1409); scanned from a reprint of"
-                "the Adzom Chogar redaction.",
-                [ { ver, 'W18557', "777-781" } ] },
+                "the Adzom Chogar redaction. W18557\n"
+                "Cycle of Dzogchen practice of the Nyingma."
+                "Revealed from its place of concealment by Rigzin Gokyi Demtru. W4CZ1106",
+                [ { ver, 'W4CZ1106', "I1KG5862-I1KG5865" },
+                  { ver, 'W18557', "777-781" } ] },
 
         { pub,  'Padma Lingpa Tercho', 21, "padma gling pa'i chos skor", '/',
                 "The visionary teachings of Pema Lingpa (1450-1521) are the basis for the rites of"
@@ -365,14 +379,62 @@
                 "terton responsible for the revival of Kathog Monastery.",
                 [ { ver, 'W22124', "150-161" } ] },
 
-        { pub,  'Sonam Gyaltsen', 2, "theg pa thams cad kyi shan 'byed nyi 'od rab gsal", '/',
+        { pub,  'Khenchen Munsel', 1, "rdo rje 'chang dngos mkhan chen mun sel mchog gi zab gsung gces bsdus dang nyer mkho khag cig", '/',
+                "Collected Works by Nyingma master Khenchen Munsel (1916-1993). "
+                "Produced with the support of the Tsadra Foundation.",
+                [ { ver, 'W1KG10749', "I1KG10852" } ] },
+
+        { pub,  'Khenchen Munsel Namtar', 1, "mun sel rin po che'i rnam thar", '/',
+                "Biography of Khenchen Munsel (1916-1993).",
+                [ { ver, 'W21967', "I1GS105488" } ] },
+
+        { pub,  'Khenpo Ngagwang', 9, "smyo shul mkhan po ngag dbang dpal bzang po'i bka' 'bum", '/',
+                "Collected Works by Khenpo Ngachung or Ngagwang Pelzang (1879-1941), "
+                "a Dzogchen teacher and scholar. He came from the Nyoshul lineage and "
+                "is famed for his exposition of the teachings of Jigme Lingpa and Dza Paltrul. "
+                "He was also the head teacher of the seminary at Katok Monastery for 13 years. "
+                "Scanned through the generous support of Prof. John Makransky, "
+                "as well as Leah Weiss and the Dzogchen Foundation.",
+                [ { ver, 'W22946', "I1KG12012-I1KG12020" } ] },
+
+        { pub,  'Khenpo Ngagwang Zindri', 1, "rdzogs pa chen po klong chen snying thig gi sngon 'gro'i khrid yig kun bzang bla ma'i zhal lung gi zin bris", '/',
+                "Exegetic remarks by Khenpo Ngagga (1879-1941 ) to the famed introduction "
+                "to the Longchen Nyingtik practice by Dza Patrul, Words of My Perfect Teacher. "
+                "Includes two works for retreatants by Chatral Rinpoche.",
+                [ { ver, 'W23229', "0867" } ] },
+
+        { pub,  'Khenpo Ngagwang Yela Tuktik', 1, "rdzogs pa chen po ye shes bla ma'i spyi don snying thig ma bu'i lde mig kun bzang thugs kyi TI k+ka", '/',
+                "An exegesis of the essential import of kun mkhyen 'jigs med gling pa's "
+                "khrid yig ye shes bla ma",
+                [ { ver, 'W30339', "6080" } ] },
+
+        { pub,  'Khenpo Ngagwang Nyima Shalung', 1, "gzhi khregs chod skabs kyi zin bris bstan pa'i nyi ma'i zhal lung", '/',
+                "Three works on the structure of Rdzogs-chen (Atiyoga) practice by "
+                "Khenpo Ngagwang Pelzang of Kathok.",
+                [ { ver, 'W30348', "6070" } ] },
+
+        { pub,  'Sonam Gyaltsen Thekpa Shenje', 2, "theg pa thams cad kyi shan 'byed nyi 'od rab gsal", '/',
                 "Survey of the nine yana of the Nyingma tradition written by the 17th"
                 "century Kathog master, Sonam Gyaltsen.",
                 [ { ver, 'W23926', "3566-3567" } ] },
 
+        { pub,  'Sonam Gyaltsen Namtar', 1, "shar kaHthog pa bsod nams rgyal mtshan dpal bzang po'i rnam par thar pa dri med yid bzhin nor bu'i phreng ba", '/',
+                "Biography of Katok Sonam Gyaltsen, a teacher of the Katok order "
+                "of the Nyingma who was active in Sikkim and Bhutan in the 17th century. "
+                "From an original manuscript preserved in the Burmiok Library. "
+                "Sonam Gyaltsen was the most important exponent of the Katok order, "
+                "one of the three major Nyingma orders (other two are Lhatsunpa and Ngadagpa) "
+                "involved in the founding of the Sikkimese state.",
+                [ { ver, 'W23174', "0426" } ] },
+
         { pub,  'Lodro Gyaltsen', 2, "blo gros rgyal mtshan", '/',
                 "Collected writings of a Nyingma master, Sogdogpa Lodro Gyaltsen (1552-1624)",
                 [ { ver, 'W8870', "1706-1707" } ] },
+
+        { pub,  'Khenpo Jigme Puntsok', 3, "'jigs med phun tshogs 'byung gnas gsung 'bum", '/',
+                "Collected Works by prominent Nyingma practitioner and Dzogchen master "
+                "Khenpo Jigme Puntsok (1933-2004) of Lerung Gar Monastery.",
+                [ { ver, 'W23774', "3007-3009" } ] },
 
         { pub,  'Longsal Khandro Nyingthig', 1, "klong gsal mkha' 'gro snying thig", '/',
                 "Rongton Pema Dechen Lingpa (d. 1713) was an important terton"
@@ -411,18 +473,27 @@
                 [ { ver, 'W23176', "395-398" } ] },
 
         { pub,  'Dorje Togme', 6, "rdo rje thogs med", '/',
-                "Dorje Togme (1746-1796/1797) was one of the terton from the"
-                "southern border lands responsible for the opening up of the"
+                "Dorje Togme (1746-1796/1797) was one of the terton from the "
+                "southern border lands responsible for the opening up of the "
                 "Hidden Land of Pemako.",
                 [ { ver, 'W21854', "2055-2060" } ] },
 
         { pub,  'Yonten Rinpoche Dzo', 1, "yon tan rin po che'i mdzod kyi dka' gnad rdo rje'i rgya mdzud 'gro byed legs bsad gser gyi thur ma", '/',
-                "A detailed commentary expanding the text of 'jigs med glin pa"
-                "masterpiece of buddhist philosophy Commentary on Jigme Lingpa's"
-                "masterpiece of Buddhist philosophy, the Yon tan mdzod; the author"
-                "was a Mongol of the Alagsha tribe, Ngawang Tendar (1759-1831) and"
+                "A detailed commentary expanding the text of 'jigs med glin pa "
+                "masterpiece of buddhist philosophy Commentary on Jigme Lingpa's "
+                "masterpiece of Buddhist philosophy, the Yon tan mdzod; the author "
+                "was a Mongol of the Alagsha tribe, Ngawang Tendar (1759-1831) and "
                 "his primarily know for his Gelug writings.",
                 [ { ver, 'W23623', "3612" } ] },
+
+        { pub,  'Yonten Dzo Drelpa', 1, "yon tan mdzod kyi mchan 'grel", '/',
+                "Commentary on the Treasury of Precious Qualities by Jigme Lingpa, "
+                "Written by Kangyur Rinpoche.",
+                [ { ver, 'W23616', "2782" } ] },
+
+        { pub,  'Khenpo Nuden Khejug', 1, "mkhas pa'i tshul la 'jug pa'i sgo'i mchan 'grel legs bshad snang ba'i 'od zer", '/',
+                "Annotated commentary to the treatise on the principles of scholarship by Khenpo Nuden.",
+                [ { ver, 'W29206', "5542" } ] },
 
         { pub,  'Gyalse Shenpen Thaye', 2, "rdzogs chen rgyal sras gzhan phan mtha' yas", '/',
                 "Dzogchen Gyalse Shenpen Taye (b. 1800) was an extraordinary"
@@ -454,6 +525,25 @@
                 "The manuscript scanned here is in ume script",
                 [ { ver, 'W21728', "2807-2826" } ] },
 
+        { pub,  'Dzogchen Trikor Dudjom Lingpa Tercho', 1, "rdzogs chen khrid skor bdud 'joms gling pa'i gter chos", '/',
+                "Dzogchen instructions from the revelations of Dudjom Lingpa.",
+                [ { ver, 'W26677', "5667" } ] },
+
+        { pub,  'Dudjom Troma Kor', 1, "bdud 'joms khros ma'i skor", '/',
+                "Collected texts on troma practice. Written by Dudjom Jikdral Yeshe Dorje (1904-1984).",
+                [ { ver, 'W1KG2808', "I1KG3151" } ] },
+
+        { pub,  'Dudjom Troma', 2, "bdud 'joms khros ma'i skor", '/',
+                "Collection of Nyingma liturgical works focusing on the deity Troma."
+                "From the visions and terma revelations of Dudjom Lingpa.",
+                [ { ver, 'W1KG3511', "I1KG3584-I1KG3585" } ] },
+
+        { pub,  'Troma Drubkor', 2, "khros ma'i sgrub skor", '/',
+                "Cycle of revelations on the realization of the wrathful dakini"
+                "from the Chonyi Namkhai Long Dzod revelations by Dudjom Lingpa."
+                "Amplified by the liturgical instructions of various masters of the order.",
+                [ { ver, 'W1KG9609', "I1KG9684-I1KG9685" } ] },
+
         { pub,  'Dodrubchen 3 Jigme Tenpai Nyima', 5, "rdo grub chen 'jigs med bstan pa'i nyi ma", '/',
                 "Collected writings of the 3rd Do Drubchen Jigme Tenpai Nyima (1865-1926),"
                 "a master of of Longchen Nyingtig practice.",
@@ -471,6 +561,10 @@
         { pub,  'Lagla Sonam Chodrub', 5, "glag bla bsod nams chos grub", '/',
                 "Collected works of a Nyingma master from Kham, Lagla Sonam Chodrub (1862-1944).",
                 [ { ver, 'W22389', "791-795" } ] },
+
+        { pub,  'Dzogchen Kangso Chokor', 3, "rdzogs chen bskang gso'i chos skor", '/',
+                "Collected rites used at rdzogs-chen monastery and its affiliates.",
+                [ { ver, 'W21955', "4453-4455" } ] },
 
         { pub,  'Apam Tercho', 4, "a pam gter chen dpa' bo chos dbyings rdo rje", '/',
                 "Collected revelations of the 19th-early 20th Golog Terton"
@@ -496,6 +590,10 @@
                 "in the sectarianism in Tibet. These annotated editions became known as"
                 "the Dzongsar Yigcha or syllabus and spread throughout all of Tibet.",
                 [ { ver, 'W23198', "801-807" } ] },
+
+        { pub,  'Dzongter Kunsang Nyima', 27, "rdzong gter kun bzang nyi ma'i gsung 'bum", '/',
+                "Collected Works by a 20th century Nyingma terton, Dzongter Kunsang Nyima (1904-1958).",
+                [ { ver, 'W00KG03612', "I00KG03625-I00KG03651" } ] },
 
         { pub,  'Dudjom Rinpoche', 25, "bdud 'joms 'jigs bral ye shes rdo rje", '/',
                 "Collected works of a extraordinary savant of the 20th century,"
