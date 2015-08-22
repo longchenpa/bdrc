@@ -1,6 +1,6 @@
 {application, pub, [
-    {description,  "PUB nying.ma Publishing System"},
-    {vsn,          "0.8"},
+    {description,  "Digital Library Publishing System"},
+    {vsn,          "0.1"},
     {applications, [kernel, stdlib, nitro]},
     {modules, []},
     {registered,   []},

@@ -4,8 +4,13 @@
 -behaviour(application).
 -export([start/2, stop/1, init/1]).
 
+% Index
+
+index() -> {ok,[L]} = file:consult("index.erl"), lists:reverse(path([],L,[])).
+
 % Directory Scan
 
+scan() -> scan(mad_utils:cwd(),[]).
 scan(Path,Result) ->
     Components   = string:tokens(Path,"/"),
     Wildcard     = lists:concat([Path,"/*"]),
@@ -121,8 +126,7 @@ search() -> {fun searchCat/3, fun searchPub/3}.
 merge(Parameters) ->
     Scan = scan(mad_utils:cwd(),[]),
     fold(0,Scan,cache(),[]),
-    {ok,[L]} = file:consult("index.erl"),
-    lists:flatten(mergeFold(0,lists:reverse(L),merge(),Parameters)).
+    lists:flatten(mergeFold(0,lists:reverse(index()),merge(),Parameters)).
 
 run([])           -> io:format("Digital Library Publishing System ~n"),
                      io:format("Copyright (c) Longchen Nyingthig Ukraine ~n"),
@@ -139,24 +143,15 @@ run([])           -> io:format("Digital Library Publishing System ~n"),
                      io:format("       pub tex        -- publish folder with TeX, DCT, TXT~n"),
                      false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
-run(["i"])        -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
-run(["u"]=P)      -> fold(0,merge(["s"]),output(),P), false;
-run(["s"]=P)      -> fold(0,merge(["s"]),output(),P), false;
-run(["fu",S])     -> fold(0,lists:flatten(fold(0,merge(["u"]),search(),S)),output(),["u"]), false;
-run(["fs",S])     -> fold(0,lists:flatten(fold(0,merge(["s"]),search(),S)),output(),[]), false;
-run(["fi",S])     -> {ok,[L]} = file:consult("index.erl"),
-                     fold(0,lists:flatten(fold(0,L,search(),S)),output(),[]), false;
 run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
-run(["d"])        -> {ok,[L]} = file:consult("index.erl"),
-                     fold(0,L,cache(),[]),
-                     Merged = mergeFold(0,scan(mad_utils:cwd(),[]),merge(),[]),
-                     fold(0,lists:flatten(Merged),output(),[]),
-                     false;
-run(["fd",S])     -> {ok,[L]} = file:consult("index.erl"),
-                     fold(0,L,cache(),[]),
-                     Merged = mergeFold(0,scan(mad_utils:cwd(),[]),merge(),[]),
-                     fold(0,fold(0,lists:flatten(Merged),search(),S),output(),[]),
-                     false;
+run(["i"|_]=P)    -> fold(0,index(),     output(),[]),    false;
+run(["u"|_]=P)    -> fold(0,merge(["s"]),output(),["u"]), false;
+run(["s"|_]=P)    -> fold(0,merge(["s"]),output(),[]),    false;
+run(["fu",S])     -> fold(0,fold(0,merge(["u"]),search(),S),output(),["u"]), false;
+run(["fs",S])     -> fold(0,fold(0,merge(["s"]),search(),S),output(),[]),    false;
+run(["fi",S])     -> fold(0,fold(0,index(),     search(),S),output(),[]),    false;
+run(["d"])        -> fold(0,index(),cache(),[]), fold(0,mergeFold(0,scan(),merge(),[]),output(),[]), false;
+run(["fd",S])     -> fold(0,index(),cache(),[]), fold(0,fold(0,mergeFold(0,scan(),merge(),[]),search(),S),output(),[]), false;
 run(["repl"])     -> mad_repl:main([],[]);
 run(["tex",File]) -> publish([File]), false.
 
@@ -178,8 +173,8 @@ lookup(Key) ->
 cacheCat(_,{cat,Name,_,_,_}=Cat,_)     -> ets:insert(fs,setelement(2,Cat,Name)).
 cachePub(_,{pub,Name,_,_,_,_,_}=Pub,_) -> ets:insert(fs,setelement(2,Pub,atom_to_list(Name))).
 
-mergeCat(Depth,{cat,Name,_,_,_}=Cat,P) -> Cat.
-mergePub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
+mergeCat(_,{cat,Name,_,_,_}=Cat,P) -> Cat.
+mergePub(_,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
     Cache = lookup(atom_to_list(Name)),
     case Cache of
          undefined -> Pub;
@@ -209,8 +204,8 @@ searchCat(_,{cat,Name,Desc,Path,_List},S) ->
          0 -> [];
          _ -> [{cat,Name,Desc,Path,[]}] end.
 searchPub(_,{pub,Name,_Num,Wylie,_Path,Desc,Ver}=Pub,S) when is_integer(_Num) andalso S == ["u"] -> [];
-searchPub(_,{pub,Name,_Num,Wylie,_Path,Desc,Ver}=Pub,S) ->
-    case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc,Wylie]++unver(Ver)]) of
+searchPub(_,{pub,Name,_Num,Wylie,Path,Desc,Ver}=Pub,S) ->
+    case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc,Wylie,Path]++unver(Ver)]) of
          0 -> [];
          _ -> [Pub] end.
 
@@ -219,7 +214,12 @@ fold(Depth,List,{Fun1,Fun2},S) ->
                    ({ver,_,_},Acc)             -> Acc;
                    ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc] end, [], List).
 
-mergeFold(Depth,List,{Fun1,Fun2},S) ->
-    lists:foldl(fun({cat,N,D,P,L}=Cat,Acc)     -> [Fun1(Depth,{cat,N,D,P,mergeFold(Depth,lists:reverse(L),{Fun1,Fun2},S)},S)|Acc];
+mergeFold(Dep,List,{Fun1,Fun2},S) ->
+    lists:foldl(fun({cat,N,D,P,L}=Cat,Acc)     -> [Fun1(Dep,{cat,N,D,P,mergeFold(Dep,lists:reverse(L),{Fun1,Fun2},S)},S)|Acc];
                    ({ver,_,_},Acc)             -> Acc;
-                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc] end, [], List).
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Dep,Pub,S)|Acc] end, [], List).
+
+path(Dep,List,Acc) ->
+    lists:foldl(fun({cat,N,D,P,L}=Cat,Acc)     -> [{cat,N,D,P,path([N|Dep],lists:reverse(L),Acc)}|Acc];
+                   ({ver,_,_},Acc)             -> Acc;
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [setelement(5,Pub,hd(Dep))|Acc] end, [], List).
