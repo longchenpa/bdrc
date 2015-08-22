@@ -141,10 +141,6 @@
                 "the behest of Khenchen Lobzang Phuntsok, a disciple of Zhabkar Tsokdruk Rangdrol.",
                 [ { ver, 'W1KG22088', "I1KG22134" } ] },
 
-        { pub,  'Ratna Lingpa Tercho', 21, "rat+na gling pa'i gter chos", '/',
-                "Complete revelations of Terchen Ratna Lingpa (1403-1479).",
-                [ { ver, 'W3PD1003', "I3PD1102-I3PD1122" } ] },
-
         { pub,  'Rongton Padma Dechen Lingpa', 3, "rong ston pad+ma bde chen gling pa'i gter chos", '/',
                 "Collection of treasure revelation texts by Rongton Padma Dechen Lingpa (1627/1663-1713).",
                 [ { ver, 'W3PD1001', "I3PD1068-I3PD1070" } ] },
@@ -237,13 +233,13 @@
                 "and hygiene. The terton of this extraordinary cycle was Sangye Lingpa (1340-1396), who "
                 "found these treasure texts at Puri Pugmoche in 1364. He transmitted these teachings to "
                 "the 5th Karmapa Deshin Shegpa (1384-1415), who presented a manuscript of the Lama "
-                "Gongdu to the Ming Emperor. This ruler rewarded both the Karmapa and the revealer of the texts.",
+                "Gongdu to the Ming Emperor. This ruler rewarded both the Karmapa and the revealer of the texts. W23433.\n",
                 [ { ver, 'W23445', "1859-1876" } ] },
 
-        { pub,  'Sangye Lingpa Lama Gondu', 1, "bla ma dgongs pa 'dus pa las ma 'ongs lung bstan bka' rgya ma'i skor", '/',
+        { pub,  'Sangye Lingpa Lama Gondu Lungten', 1, "bla ma dgongs pa 'dus pa las ma 'ongs lung bstan bka' rgya ma'i skor", '/',
                 "Prophecies connected with the Lama Gongdu cycle of revelations by "
                 "Sanggye Lingpa (1340-1396). Reproduced from a rare manuscript "
-                "from Namtse Monastery in Sikkim.",
+                "from Namtse Monastery in Sikkim. W23433",
                 [ { ver, 'W23433', "1685" } ] },
 
         { cat,  "klong chen pa'i gsung skor",
@@ -312,7 +308,7 @@
                 "be included in a subsequent hard drive.",
                 [ { ver, 'W23206', "1560, 1997-1999" } ] },
 
-        { pub,  'Ratna Lingpa', 20, "ratna gling pa'i gter chos (dpal yul lugs)", '/',
+        { pub,  'Ratna Lingpa Tercho', 20, "ratna gling pa'i gter chos (dpal yul lugs)", '/',
                 "The teachings of Ratna Lingpa (1403-1479), a terton of the southern "
                 "Tibetan borderlands spread widely throughout eastern Tibet and were "
                 "particularly practiced at Peyul Monastery. This collection was put "
@@ -357,12 +353,12 @@
                 "teachings which became part of the ritual of state of Sikkim.",
                 [ { ver, 'W23694', "782-786" } ] },
 
-        { pub,  'Lhatsun Namka Jigm Dorje Nyingpo', 2, "rdo rje snying po sprin gyi thol glu", '/',
+        { pub,  'Lhatsun Namka Jigme Dorje Nyingpo', 2, "rdo rje snying po sprin gyi thol glu", '/',
                 "Revelations by Lhatsun Namka Jigme (1567-1650) of a cycle of "
                 "teachings which became part of the ritual of state of Sikkim.",
                 [ { ver, 'W13780', "844-845" } ] },
 
-        { pub,  'Tsele Natsog Rangdrol', 8, "rtse le sna tshogs rang grol", '/',
+        { pub,  'Tsele Natsok Rangdrol', 8, "rtse le sna tshogs rang grol", '/',
                 "Two manuscripts of the collected works of "
                 "Tsele Natsog Rangdrol (b. 1608) have so far come to light. "
                 "This eight volume collection is the largest and contains his "
@@ -623,7 +619,7 @@
                 "teachers on the practical use the 13 text od the Dzongsar syllabus.",
                 [ { ver, 'W23197', "835" } ] },
 
-        { pub,  'Jamyang Kyentse Wangpo', 24, "'jam dbyangs mkhyen brtse'i dbang po'i gsung 'bum", '/',
+        { pub,  'Jamyang Khyentse Wangpo', 24, "'jam dbyangs mkhyen brtse'i dbang po'i gsung 'bum", '/',
                 "One of the greatest minds of all times in the Tibetan tradition was Jamyang "
                 "Kyentse Wangpo (1820-1892), another of the three pillars of the Rime tradition. His "
                 "collected works reflect contain many of his notes and contain insights into his thinking on "
@@ -631,7 +627,7 @@
                 [ { ver, 'W21807', "0506-0529" },
                   { ver, 'W3PD1002', "I3PD1037-I3PD1061" } ] },
 
-        { pub,  'Dzongsar Kyentse Jamyang Chokyi Lodro', 10, "'jam dbyangs mkhyen brtse chos kyi blo gros", '/',
+        { pub,  'Dzongsar Khyentse Jamyang Chokyi Lodro', 10, "'jam dbyangs mkhyen brtse chos kyi blo gros", '/',
                 "One of the greatest teachers of the 20th century was Dzongsar Kyentse "
                 "Jamyang Chokyi Lodro (1893-1959). His collected works were issued by "
                 "his labrang in Gangtok for the benefit of his reembodiment, Dzongsar Khyentse Norbu. "

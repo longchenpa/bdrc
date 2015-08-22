@@ -25,22 +25,23 @@ scan(Path,Result) ->
          true  -> Res = lists:flatten([ scan(lists:concat([Path,"/",filename:basename(F)]),[]) || F <- Files, filelib:is_dir(F) ]),
                    case lists:all(fun({ver,_,_}) -> true;
                                      (_) -> false end, Res) of
-                        true  ->  [ { pub, Parent, vers_size(Res), "", ParentParent, "", vers_files(Res) } | Result ];
+                        true  ->  VerFiles = Res,%vers_files(Res),
+                                  [ { pub, list_to_atom(Parent), {vers_size(Res),length(VerFiles)}, "", ParentParent, "", VerFiles } | Result ];
                         false ->  [ { cat, Parent, "", ParentParent, Res }    | Result ] end;
          false -> case tbrc_work(Parent) of
                       true  -> [ { ver, list_to_atom(Parent), tbrc_files(Path) } | Result ];
                       false -> ScannedFiles = tbrc_files(Path),
-                               [ { pub, Parent, print_size(files_size(ScannedFiles)), "", ParentParent, "", base_files(ScannedFiles) } | Result ] end end.
+                               [ { pub, list_to_atom(Parent), {print_size(files_size(ScannedFiles)),length(ScannedFiles)}, "", ParentParent, "", base_files(ScannedFiles) } | Result ] end end.
 
 print_size(Size) when Size > 1000000000 -> io_lib:format("~.1fG",[Size/1000000000]);
 print_size(Size) when Size > 1000000    -> io_lib:format("~.1fM",[Size/1000000]);
 print_size(Size) when Size > 1000       -> io_lib:format("~.1fK",[Size/1000]);
 print_size(Size) when Size > 0          -> io_lib:format("~.1fB",[Size]);
-print_size(Size) -> "0".
+print_size(_Size) -> "_".
 
 files_size(Files) -> lists:sum([ filelib:file_size(F) || F <- Files]).
 vers_size(Versions) -> print_size(lists:sum([ files_size(Files) || {ver,_,Files} <- Versions])).
-vers_files(Versions) -> [ [ {ver,A,filename:basename(F)} || F <- Files ] || {ver,A,Files} <- Versions].
+vers_files(Versions) -> lists:flatten([ [ {ver,A,filename:basename(F)} || F <- Files ] || {ver,A,Files} <- Versions]).
 
 base_files(Files) -> [ filename:basename(F) || F <- Files ].
 tbrc_size({ver,_,Files}) -> files_size(Files);
@@ -72,6 +73,7 @@ menu(File,Author) ->
 start(_StartType, _StartArgs) -> supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 stop(_State) -> ok.
 init([]) -> {ok, {{one_for_one, 5, 10}, []}}.
+mnesia() -> ets:new(fs,[set,named_table,{keypos,2},public]).
 
 tex(Folder,Name) ->
     "\\documentclass[8pt,twoside]{article}\n"
@@ -83,9 +85,7 @@ tex(Folder,Name) ->
 
 tex2(F,Ext) -> filename:basename(F, ".tex") ++ Ext.
 
-main(A) -> 
-    ok = io:setopts(standard_io, [{encoding, unicode}]),
-    run(A).
+main(A) -> mnesia(), io:setopts(standard_io, [{encoding, unicode}]), run(A).
 
 to_list('') -> "";
 to_list(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ " ";
@@ -109,48 +109,95 @@ publish(Files) ->
         file:rename("temp.pdf",tex2(File,".pdf"))
       end || File <- Files, File /= "synrc.tex", File /= "temp.tex"].
 
+cache()  -> {fun cacheCat/3,  fun cachePub/3}.
 output() -> {fun outputCat/3, fun outputPub/3}.
 search() -> {fun searchCat/3, fun searchPub/3}.
 
-run([])           -> io:format("PUB NYING MA Publishing System ~n"),
+merge(Parameters) ->
+    Scan = scan(mad_utils:cwd(),[]),
+    fold(0,Scan,cache(),[]),
+    {ok,[L]} = file:consult("index.erl"),
+    fold(0,L,output(),Parameters).
+
+run([])           -> io:format("Digital Library Publishing System ~n"),
+                     io:format("Copyright (c) Longchen Nyingthig Ukraine ~n"),
+                     io:format("~n"),
                      io:format("Usage:~n"),
-                     io:format("   pub i          -- print index~n"),
-                     io:format("   pub dump       -- dump Erlang merged scan/index~n"),
-                     io:format("   pub d          -- directory scan~n"),
-                     io:format("   pub r          -- REPL~n"),
-                     io:format("   pub s <text>   -- search in index~n"),
-                     io:format("   pub tex <file> -- publish TeX file~n"),
-                     io:format("   pub tex        -- publish folder with TeX, DCT, TXT~n"),
+                     io:format("       pub index      -- print TBRC index~n"),
+                     io:format("       pub dump       -- dump Erlang merged scan/index~n"),
+                     io:format("       pub all        -- display everything, actual with sizes~n"),
+                     io:format("       pub needed     -- not synced, show 'to download' list~n"),
+                     io:format("       pub actual     -- available on disk (directory scan)~n"),
+                     io:format("       pub repl       -- REPL~n"),
+                     io:format("       pub s <text>   -- search in index~n"),
+                     io:format("       pub tex <file> -- publish TeX file~n"),
+                     io:format("       pub tex        -- publish folder with TeX, DCT, TXT~n"),
                      false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
-run(["i"])        -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
-run(["s",String]) -> {ok,[L]} = file:consult("index.erl"), fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
+run(["index"])    -> {ok,[L]} = file:consult("index.erl"), fold(0,L,output(),[]), false;
+run(["needed"]=P) -> merge(P), false;
+run(["all"]=P)    -> merge(P), false;
+run(["s",String]) -> {ok,[L]} = file:consult("index.erl"),
+                     fold(0,lists:flatten(fold(0,L,search(),String)),output(),[]), false;
 run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
-run(["d"])        -> fold(0,scan(mad_utils:cwd(),[]),output(),[]), false;
-run(["r"])        -> mad_repl:main([],[]);
+run(["actual"])   -> {ok,[L]} = file:consult("index.erl"), fold(0,L,cache(),[]),
+                     fold(0,scan(mad_utils:cwd(),[]),output(),[]), false;
+run(["repl"])     -> mad_repl:main([],[]);
 run(["tex",File]) -> publish([File]), false.
 
-ver(Versions) -> string:join(unver(Versions),"").
-unver(Versions) -> lists:foldl(fun({ver,Work,Pages},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
-                                   ({ver,Work,Pages},Acc) when is_list(Work) -> Acc;
-                                            (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
-                                            (Work,Acc) when is_list(Work) -> Acc;
-                                            ({ver,Work,Pages},Acc) when is_list(Work) -> [ver(Work)|Acc] end,[],Versions).
+ver(Versions)     -> string:join(unver(Versions),"").
+unver(Versions)   -> lists:foldl(fun ({ver,Work,_},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                     ({ver,Work,_},Acc) when is_list(Work) -> [ver(Work)|Acc];
+                                             (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                             (Work,Acc) when is_list(Work) -> Acc end,[],Versions).
 
 indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 
-outputCat(Depth,{cat,Name,Desc,Path,List},S) ->
-    indent(Depth), io:format("+-- ~s~n",[to_list(Name)]), [].
-outputPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver},S) ->
-    indent(Depth), X = io:format("+-- ~s ~s ~ts ~s~n",[to_list(Name),to_list(Num),%Wylie,
-                                                                         wylie:tibetan(Wylie),
-                                                                         ver(Ver)]), [].
+lookup(Key) ->
+    Res = ets:lookup(fs,Key),
+    case Res of
+         [] -> undefined;
+         [Value] -> Value;
+         Values -> Values end.
 
-searchCat(Depth,{cat,Name,Desc,Path,List}=Cat,S) ->
-    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc]]) of 0 -> []; N -> [{cat,Name,Desc,Path,[]}] end.
-searchPub(Depth,{pub,Name,Num,Wylie,Path,Desc,Ver}=Pub,S) ->
-    case lists:sum([string:str(string:to_lower(X),string:to_lower(S))||X<-[to_list(Name),Desc,Wylie]++unver(Ver)]) of 0 -> []; N -> [Pub] end.
+cacheCat(_,{cat,Name,_,_,_}=Cat,_)     -> ets:insert(fs,setelement(2,Cat,Name)).
+cachePub(_,{pub,Name,_,_,_,_,_}=Pub,_) -> ets:insert(fs,setelement(2,Pub,atom_to_list(Name))).
+
+outputCat(Depth,{cat,Name,_Desc,_Path,_List},_) ->
+    indent(Depth),
+    io:format("+-- ~s~n",[to_list(Name)]), [].
+outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
+    Cache = lookup(atom_to_list(Name)),
+    case Cache of
+         undefined -> output(Depth,Pub,Parameters);
+                 _ -> case element(3,Cache) of
+                           {_,_} -> output(Depth,setelement(3,Pub,element(3,Cache)),Parameters);
+                               _ -> output(Depth,setelement(3,Cache,element(3,Pub)),Parameters) end end.
+
+output(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
+    case SizeNum of
+         {Size,Num} -> case Parameters of
+                            ["needed"] -> skip;
+                            _ -> indent(Depth),
+                                 io:format("+-- ~s ~w:[~s] ~ts ~s~n",
+                                 [Name,Num,to_list(Size),wylie:tibetan(Wylie),ver(Ver)]), [] end;
+              Num   -> indent(Depth),
+                       io:format("+-- ~s ~w ~ts ~s~n",
+                       [Name,Num,wylie:tibetan(Wylie),ver(Ver)]), [] end.
+
+lower(X) -> string:to_lower(X).
+has(X,Y) -> string:str(X,Y).
+
+searchCat(_,{cat,Name,Desc,Path,_List},S) ->
+    case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc]]) of
+         0 -> [];
+         _ -> [{cat,Name,Desc,Path,[]}] end.
+searchPub(_,{pub,Name,_Num,Wylie,_Path,Desc,Ver}=Pub,S) ->
+    case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc,Wylie]++unver(Ver)]) of
+         0 -> [];
+         _ -> [Pub] end.
 
 fold(Depth,List,{Fun1,Fun2},S) ->
-    lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> [Acc|[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]];
-                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Acc|Fun2(Depth,Pub,S)] end, [], List).
+    lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> [[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]|Acc];
+                   ({ver,_,_},Acc)             -> Acc;
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc] end, [], List).
