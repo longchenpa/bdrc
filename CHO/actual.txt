@@ -1,0 +1,133 @@
++-- tbrc
+|   +-- Canon
+|   |   +-- Kangyur Dege 103:[6.1G] བཀའ་འགྱུར་༼སྡེ་དགེ་པར་ཕུད༽ W22084 
+|   |   +-- Kangyur Tok Palace 109:[4.4G]  
+|   |   +-- Tengyur Dege 213:[7.6G] བསྟན་འགྱུར་༼སྡེ་དགེ༽ W23703 
+|   +-- Gelug
+|   |   +-- Dalai Lama 1 Gendun Drub 6:[507.7M]  
+|   |   +-- Dalai Lama 7 Kalzang Gyatso 13:[445.7M]  
+|   |   +-- Gyaltsab Je Darma Rinchen 8:[142.4M]  
+|   |   +-- Kadam Chojung 2:[37.3M] བཀའ་གདམས་ཆོས་འབྱུང་གསལ་བའི་སྒྲོན་མེ W15964 
+|   |   +-- Khedrub Je Gelek Pelzang 16:[313.4M]  
+|   +-- Kagyu
+|   |   +-- Bara Kagyu Chocho 1:[18.1M] འབའ་ར་བཀའ་བརྒྱུད་ཆོས་སྤྱོད W24025 
+|   |   +-- Bara Kagyu Serteng 4:[117.6M] འབའ་ར་དཀར་བརྒྱུད་གསེར་འཕྲེང W19231 
+|   |   +-- Drugpa Wangde 6:[145.7M]  
+|   |   +-- Geshe Chapu Gendun Rinchen 5:[144.1M]  
+|   |   +-- Karmapa 15 Kakyab Dorje 10:[167.4M]  
+|   |   +-- Padma Karpo 24:[903.2M]  
+|   |   +-- Rigzin Chokyi Drakpa 15:[428.4M]  
+|   |   +-- Shamar Kacho Wangpo 4:[76.4M]  
+|   |   +-- Tokden Shakya Shri 1:[42.5M]  
+|   |   +-- Tsibri Parma 31:[2.3G]  
+|   +-- Nyingma
+|   |   +-- Canon
+|   |   |   +-- Bairo Gyubum 8:[203.4M] བཻ་རོའི་རྒྱུད་འབུམ W21519 
+|   |   |   +-- Gyud Chudun 3:[389.0M] རྙིང་མ་རྒྱུད་བཅུ་བདུན W27491 W21520 W1KG11703 
+|   |   |   +-- Kathok Kama 120:[4.3G] བཀའ་མ་ཤིན་ཏུ་རྒྱས་པ་༼ཀཿ་ཐོག༽ W25983 
+|   |   |   +-- Longchenpa Nyingthig Yabzhi 13:[296.8M] སྙིང་ཐིག་ཡ་བཞི W12827 
+|   |   |   +-- Nyingma Gyubum Tingkye 36:[1.0G] རྙིང་མ་རྒྱུད་འབུམ་༼གཏིང་སྐྱེས་དགོན་པ་བྱང་བྲིས་མ༽ W21518 
+|   |   |   +-- Nyingma Gyubum Tsamdrak 46:[2.0G] རྙིང་མ་རྒྱུད་འབུམ་༼མཚམས་བྲག༽ W21521 
+|   |   |   +-- Nyingma Kama 58:[1.6G] རྙིང་མ་བཀའ་མ་རྒྱས་པ W19229 
+|   |   |   +-- Rinchen Terdzo Chenmo 111:[4.4G] རིན་ཆེན་གཏེར་མཛོད་ཆེན་མོ W20578 
+|   |   |   +-- Tersar Chodzo Chenmo 388:[35.2G] གཏེར་གསར་ཆོས་མཛོད་ཆེན་མོ W2PD16917 
+|   |   +-- Dzogchen
+|   |   |   +-- Dzogchen Kangso Chokor 3:[44.9M] རྫོགས་ཆེན་བསྐང་གསོའི་ཆོས་སྐོར W21955 
+|   |   +-- Kama
+|   |   |   +-- Dodrubchen 3 Jigme Tenpai Nyima 5:[144.7M] རྡོ་གྲུབ་ཆེན་འཇིགས་མེད་བསྟན་པའི་ཉི་མ W23627 
+|   |   |   +-- Dudjom Rinpoche 24:[662.7M] བདུད་འཇོམས་འཇིགས་བྲལ་ཡེ་ཤེས་རྡོ་རྗེ W20869 
+|   |   |   +-- Dudjom Troma Kor 1:[139.8M] བདུད་འཇོམས་ཁྲོས་མའི་སྐོར W1KG2808 
+|   |   |   +-- Dza Patrul Rinpoche 5:[162.4M] རྫ་དཔལ་སྤྲུལ་ཨོ་རྒྱན་འཇིགས་མེད་ཆོས་ཀྱི་དབང་པོ W5832 
+|   |   |   +-- Gyalse Shenpen Thaye 2:[71.3M] རྫོགས་ཆེན་རྒྱལ་སྲས་གཞན་ཕན་མཐའ་ཡས W20338 
+|   |   |   +-- Jigme Lingpa Sungbum 14:[376.5M] འཇིགས་མེད་གླིང་པའི་གསུང་འབུམ W07477 
+|   |   |   +-- Longchenpa Dzo Dun 9:[438.8M] མཛོད་བདུན W22920 
+|   |   |   +-- Longchenpa Ngalso Korsum 1:[38.3M] ངལ་གསོ་སྐོར་གསུམ་སོགས W23760 
+|   |   |   +-- Longchenpa Sungthorbu 4:[66.0M] ཀློང་ཆེན་པའི་གསུང་ཐོར་བུ W23555 W23504 
+|   |   |   +-- Mipham Sungbum 28:[1.2G] མི་ཕམ་རྒྱ་མཚོའི་གསུང་འབུམ W23468 
+|   |   |   +-- Ngawang Tenzin Norbu 9:[70.6M]  
+|   |   |   +-- Tsele Natsok Rangdrol 8:[91.4M] རྩེ་ལེ་སྣ་ཚོགས་རང་གྲོལ W21019 
+|   |   |   +-- Yonten Dzo Drelpa 1:[4.5M] ཡོན་ཏན་མཛོད་ཀྱི་མཆན་འགྲེལ W23616 
+|   |   |   +-- Yonten Rinpoche Dzo 1:[30.9M] ཡོན་ཏན་རིན་པོ་ཆེའི་མཛོད་ཀྱི་དཀའ་གནད་རྡོ་རྗེའི་རྒྱ་མཛུད་འགྲོ་བྱེད་ལེགས་བསད་གསེར་གྱི་ཐུར་མ W23623 
+|   |   +-- Kathok
+|   |   |   +-- Golok Tersar
+|   |   |   |   +-- Apam Tercho 4:[215.0M] ཨ་པམ་གཏེར་ཆེན་དཔའ་བོ་ཆོས་དབྱིངས་རྡོ་རྗེ W23183 
+|   |   |   |   +-- Do Khyentse Yeshe 3:[192.0M] མྡོ་མཁྱེན་བརྩེ་ཡེ་ཤེས་རྡོ་རྗེའི་གཏེར་ཆོས W1PD89990 W26033 W18047 
+|   |   |   |   +-- Dorje Dradul 1:[9.0M] དགེ་བའི་བཤེས་གཉེན་ཆེན་མོ་རྡོ་རྗེ་དགྲ་འདུལ་གྱི་གསུང་པདྨ་དཀར་པོའི་དོ་ཤལ W2DB19541 
+|   |   |   |   +-- Dudjom Lingpa Tercho 20:[377.4M] བདུད་འཇོམས་གླིང་པ W21728 
+|   |   |   |   +-- Dudjom Troma 1:[88.1M] བདུད་འཇོམས་ཁྲོས་མའི་སྐོར W1KG3511 
+|   |   |   |   +-- Dzogchen Trikor Dudjom Lingpa Tercho 1:[3.7M] རྫོགས་ཆེན་ཁྲིད་སྐོར་བདུད་འཇོམས་གླིང་པའི་གཏེར་ཆོས W26677 
+|   |   |   |   +-- Dzongter Kunsang Nyima 27:[2.8G] རྫོང་གཏེར་ཀུན་བཟང་ཉི་མའི་གསུང་འབུམ W00KG03612 
+|   |   |   |   +-- Ngedon Gyatso 2:[407.7M]  
+|   |   |   |   +-- Sera Khandro Sunbum 6:[371.8M] སེ་ར་མཁའ་འགྲོའི་གསུང་འབུམ W1PD108254 
+|   |   |   |   +-- Sera Khandro Tercho 4:[54.8M] སེ་ར་མཁའ་འགྲོ་ཀུན་བཟང་བདེ་སྐྱོང་དབང་མོ W21888 
+|   |   |   |   +-- Tare Lhamo Tercho 13:[233.8M]  
+|   |   |   |   +-- Troma Drubkor 2:[62.1M] ཁྲོས་མའི་སྒྲུབ་སྐོར W1KG9609 
+|   |   |   +-- Longchen Nyingthig
+|   |   |   |   +-- Longchen Nyingthig Triyik 1:[52.0M] ཀློང་ཆེན་སྙིང་ཐིག་གི་ཁྲིད་ཡིག W1KG22088 
+|   |   |   |   +-- Nyingthig Tsapod 3:[283.9M]  
+|   |   |   +-- Nyarong Tersar
+|   |   |   |   +-- Adzom Drukpa 1:[997.4K] ཨ་འཛོམ་འགྲོ་འདུལ་དཔའ་བོ་རྡོ་རྗེའི་གསུང་འབུམ W19665 W1KG16648 
+|   |   |   |   +-- Dorje Dechen Lingpa Tercho 11:[635.8M] རྡོ་རྗེ་བདེ་ཆེན་གླིང་པ་གཏེར་ཆོས W00EGS1016625 
+|   |   |   |   +-- Drodul Garwang Lingpa 8:[112.1M] འགྲོ་འདུལ་གར་དབང་གླིང་པ་གཏེར་ཆོས W29031 
+|   |   |   |   +-- Jigme Puntsok Jungne 2:[131.3M] གསེར་རྟ་མཁན་པོ་འཇིགས་མེད་ཕུན་ཚོགས་ཀྱི་གསུང་འབུམ W1PD95698 W00KG03976 
+|   |   |   |   +-- Khenpo Jigme Puntsok 3:[110.3M] འཇིགས་མེད་ཕུན་ཚོགས་འབྱུང་གནས་གསུང་འབུམ W23774 
+|   |   |   |   +-- Nyakla Pema Dudul 5:[307.8M] ཉག་བླ་པདྨ་བདུད་འདུལ་གྱི་གཏེར་ཆོས་སྐོར W23695 
+|   |   |   |   +-- Orgyen Thegchog Lingpa 13:[4.7G]  
+|   |   |   |   +-- Osal Dorje Sandzo 1:[81.6M] ཨོད་གསལ་རྡོ་རྗེ་གསང་མཛོད W8LS16492 W19666 
+|   |   |   |   +-- Ranrig Dorje Tercho 42:[1.7G] ཉག་བླ་རང་རིག་རྡོ་རྗེའི་གཏེར་ཆོས W1PD289 
+|   |   |   |   +-- Sogyal Lerab Lingpa 16:[410.6M] ལས་རབ་གླིང་པའི་གཏེར་ཆོས W21810 
+|   |   |   |   +-- Tutop Lingpa Tercho 2:[5.4G] མཐུ་སྟོབས་གླིང་པའི་གཏེར་ཆོས W1KG16650 W3PD989 
+|   |   |   |   +-- Yeshes Jungnas Tercho 8:[672.8M] སྒོ་འཛིན་གཏེར་སྟོན་ཡེ་ཤེས་འབྱུང་གནས་ཀྱི་གཏེར་ཆོས W3PD991 
+|   |   |   +-- Nyengyud Tri Chenpo
+|   |   |   |   +-- Dzogpachenpo Yangti Nagpo 3:[154.5M]  
+|   |   |   |   +-- Nyengyud Trichen Chusum Kor  13:[375.0M]  
+|   |   |   +-- Pandrub
+|   |   |   |   +-- Kathok Rigdzin Tsewang Norbu 4:[221.9M] ཀཿ་ཐོག་རིག་འཛིན་ཚེ་དབང་ནོར་བུ W23176 
+|   |   |   |   +-- Khenchen Munsel 1:[9.5M] རྡོ་རྗེ་འཆང་དངོས་མཁན་ཆེན་མུན་སེལ་མཆོག་གི་ཟབ་གསུང་གཅེས་བསྡུས་དང་ཉེར་མཁོ་ཁག་ཅིག W1KG10749 
+|   |   |   |   +-- Khenchen Munsel Namtar 1:[11.3M] མུན་སེལ་རིན་པོ་ཆེའི་རྣམ་ཐར W21967 
+|   |   |   |   +-- Khenpo Ngagwang 9:[71.9M] སྨྱོ་ཤུལ་མཁན་པོ་ངག་དབང་དཔལ་བཟང་པོའི་བཀའ་འབུམ W22946 
+|   |   |   |   +-- Khenpo Ngagwang Nyima Shalung 1:[49.1M] གཞི་ཁྲེགས་ཆོད་སྐབས་ཀྱི་ཟིན་བྲིས་བསྟན་པའི་ཉི་མའི་ཞལ་ལུང W30348 
+|   |   |   |   +-- Khenpo Ngagwang Yela Tuktik 1:[19.3M] རྫོགས་པ་ཆེན་པོ་ཡེ་ཤེས་བླ་མའི་སྤྱི་དོན་སྙིང་ཐིག་མ་བུའི་ལྡེ་མིག་ཀུན་བཟང་ཐུགས་ཀྱི་ཊཱི་ཀྐ W30339 
+|   |   |   |   +-- Khenpo Ngagwang Zindri 1:[46.1M] རྫོགས་པ་ཆེན་པོ་ཀློང་ཆེན་སྙིང་ཐིག་གི་སྔོན་འགྲོའི་ཁྲིད་ཡིག་ཀུན་བཟང་བླ་མའི་ཞལ་ལུང་གི་ཟིན་བྲིས W23229 
+|   |   |   |   +-- Khenpo Nuden Khejug 1:[70.6M] མཁས་པའི་ཚུལ་ལ་འཇུག་པའི་སྒོའི་མཆན་འགྲེལ་ལེགས་བཤད་སྣང་བའི་འོད་ཟེར W29206 
+|   |   |   |   +-- Lodro Gyaltsen 2:[54.9M] བློ་གྲོས་རྒྱལ་མཚན W8870 
+|   |   |   |   +-- Nyoshul Khenpo 2:[73.1M]  
+|   |   |   |   +-- Sonam Gyaltsen 2:[28.6M]  
+|   |   |   |   +-- Sonam Gyaltsen Namtar 1:[7.6M] ཤར་ཀཿཐོག་པ་བསོད་ནམས་རྒྱལ་མཚན་དཔལ་བཟང་པོའི་རྣམ་པར་ཐར་པ W23174 
+|   |   |   |   +-- Thekpa Shenje 2:[28.9M]  
+|   |   |   +-- Ter Nying
+|   |   |   |   +-- Dudul Dorje Zater 12:[383.7M] སྤོ་བོ་གཏེར་ཆེན་བདུད་འདུལ་རྡོ་རྗེ W22123 
+|   |   |   |   +-- Jatson Podrug 7:[104.7M]  
+|   |   |   |   +-- Longsal Khandro Nyingthig 1:[47.4M] ཀློང་གསལ་མཁའ་འགྲོ་སྙིང་ཐིག W9201 
+|   |   |   |   +-- Longsal Nyingpo 12:[178.7M] ཀློང་གསལ་སྙིང་པོ W22124 
+|   |   |   |   +-- Rongton Padma Dechen Lingpa 3:[422.6M] རོང་སྟོན་པདྨ་བདེ་ཆེན་གླིང་པའི་གཏེར་ཆོས W3PD1001 
+|   |   +-- Terma
+|   |   |   +-- Gong Ter
+|   |   |   |   +-- Lhatsun Namka Jigme 2:[527.9M] ལྷ་བཙུན་ནམ་མཁའ་འཇིགས་མེད W1KG3654 W20865 
+|   |   |   |   +-- Lhatsun Namka Jigme Dorje Nyingpo 2:[32.5M] རྡོ་རྗེ་སྙིང་པོ་སྤྲིན་གྱི་ཐོལ་གླུ W13780 
+|   |   |   |   +-- Lhatsun Namka Jigme Rigdzin Sodrub 5:[44.9M] རིག་འཛིན་སྲོག་སྒྲུབ W23694 
+|   |   |   |   +-- Nam Cho 13:[542.3M] གནམ་ཆོས W21578 
+|   |   |   +-- Lingpa Chenpo
+|   |   |   |   +-- Dorje Lingpa Tercho 4:[103.5M] རྡོ་རྗེ་གླིང་པའི་གཏེར་ཆོས W23206 
+|   |   |   |   +-- Padma Lingpa Tercho 21:[1.4G] པདམ་གླིང་པའི་ཆོས་སྐོར W21727 
+|   |   |   |   +-- Ratna Lingpa Tercho 1:[2.8G] རཏྣ་གླིང་པའི་གཏེར་ཆོས་༼དཔལ་ཡུལ་ལུགས༽ W23823-W23826 W21731-W21741 W3PD1003 
+|   |   |   |   +-- Sangye Lingpa Lama Gondu 18:[912.8M] བླ་མ་དགོངས་འདུས W23445 
+|   |   |   +-- Nga Ter
+|   |   |   |   +-- Gongpa Zangtal 2:[339.1M] རྫོགས་པ་ཆེན་པོ་དགོངས་པ་ཟང་ཐལ་དང་ཀ་དག་རང་བྱུང་རང་ཤར W18557 W4CZ1106 
+|   |   |   |   +-- Guru Chowang 2:[52.1M] གུ་རུ་ཆོས་དབང་གི་རང་རྣམ་དང་ཞལ་གདམས W23802 
+|   |   |   |   +-- Guru Chowang Kagye 4:[34.5M] བཀའ་བརྒྱད་གསང་བ་ཡོངས་རྫོགས W23819 
+|   |   |   |   +-- Nyang Ral Nyima Ozer Kagye 13:[266.1M] བཀའ་བརྒྱད་བདེ་གཤེགས་འདུས་པ W22247 
+|   |   |   +-- Nying Ter
+|   |   |   |   +-- Terdak Lingpa 18:[477.5M] གཏེར་བདག་གླིང་པ་འགྱུར་མེད་རྡོ་རྗེ W22096 
+|   |   |   |   +-- Tsasum Yidam Gondu 19:[369.0M] རྩ་གསུམ་ཡི་དམ་དགོངས་འདུས W21974 
+|   |   |   +-- Rime
+|   |   |   |   +-- Chokgyur Lingpa 41:[842.9M] མཆོག་འགྱུར་གླིང་པའི་གཏེར་གསར W22642 
+|   |   |   |   +-- Dilgo Kyentse Rabsal Dawa 25:[669.7M] དིལ་མགོ་མཁྱེན་བརྩེ་རབ་གསལ་ཟླ་བ W21809 
+|   |   |   |   +-- Dzongsar Khyentse Jamyang Chokyi Lodro 8:[120.7M] འཇམ་དབྱངས་མཁྱེན་བརྩེ་ཆོས་ཀྱི་བློ་གྲོས W21814 W21813 
+|   |   |   |   +-- Jamgon Kongtrul Dam Ngag Dzo 18:[480.5M] གདམས་ངག་མཛོད W20877 
+|   |   |   |   +-- Jamgon Kongtrul Gyacher Kadzo 19:[501.7M]  
+|   |   |   |   +-- Jamyang Khyentse Wangpo 2:[3.6G] འཇམ་དབྱངས་མཁྱེན་བརྩེའི་དབང་པོའི་གསུང་འབུམ W3PD1002 W21807 
+|   +-- Sakya
+|   |   +-- Lamdre Lobshe 21:[266.1M]  
+|   |   +-- Lamdre Tsokshe 6:[78.0M]  
+|   |   +-- Sakya Kabum 18:[798.0M]  
