@@ -1,7 +1,7 @@
 {application, pub, [
-    {description,  "Digital Library Publishing System"},
+    {description,  "PUB TDL PS Tibetan Digital Library Publishing System"},
     {vsn,          "0.1"},
-    {applications, [kernel, stdlib, nitro]},
+    {applications, [kernel, stdlib, nitro, mad]},
     {modules, []},
     {registered,   []},
     {mod, { pub, []}},

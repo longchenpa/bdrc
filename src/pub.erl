@@ -4,6 +4,13 @@
 -behaviour(application).
 -export([start/2, stop/1, init/1]).
 
+% Merge
+
+merge(Parameters) ->
+    Scan = scan(mad_utils:cwd(),[]),
+    fold(0,Scan,cache(),[]),
+    lists:flatten(mergeFold(0,lists:reverse(index()),merge(),Parameters)).
+
 % Index
 
 index() -> {ok,[L]} = file:consult("index.erl"), lists:reverse(path([],L,[])).
@@ -38,10 +45,10 @@ print_size(Size) when Size > 1000       -> io_lib:format("~.1fK",[Size/1000]);
 print_size(Size) when Size > 0          -> io_lib:format("~.1fB",[Size]);
 print_size(_Size) -> "_".
 
-files_size(Files) -> lists:sum([ filelib:file_size(F) || F <- Files]).
-vers_size(Versions) -> print_size(lists:sum([ files_size(Files) || {ver,_,Files} <- Versions])).
+files_size(Files)    -> lists:sum([ filelib:file_size(F) || F <- Files]).
+vers_size(Versions)  -> print_size(lists:sum([ files_size(Files) || {ver,_,Files} <- Versions])).
 vers_files(Versions) -> lists:flatten([ [ {ver,A,filename:basename(F)} || F <- Files ] || {ver,A,Files} <- Versions]).
-base_files(Files) -> [ filename:basename(F) || F <- Files ].
+base_files(Files)    -> [ filename:basename(F) || F <- Files ].
 
 tbrc_work(A) -> string:to_lower(hd(A)) == $w.
 tbrc_size({ver,_,Files}) -> files_size(Files);
@@ -110,7 +117,6 @@ start(_StartType, _StartArgs) -> supervisor:start_link({local, ?MODULE}, ?MODULE
 stop(_State) -> ok.
 init([]) -> {ok, {{one_for_one, 5, 10}, []}}.
 mnesia() -> ets:new(fs,[set,named_table,{keypos,2},public]).
-
 main(A) -> mnesia(), io:setopts(standard_io, [{encoding, unicode}]), run(A).
 
 to_list('') -> "";
@@ -118,51 +124,45 @@ to_list(Atom) when is_atom(Atom) -> atom_to_list(Atom) ++ " ";
 to_list(Atom) when is_integer(Atom) -> integer_to_list(Atom) ++ " ";
 to_list(L) -> L.
 
-cache()  -> {fun cacheCat/3,  fun cachePub/3}.
-merge()  -> {fun mergeCat/3,  fun mergePub/3}.
-output() -> {fun outputCat/3, fun outputPub/3}.
-search() -> {fun searchCat/3, fun searchPub/3}.
+% Command Line Processor
 
-merge(Parameters) ->
-    Scan = scan(mad_utils:cwd(),[]),
-    fold(0,Scan,cache(),[]),
-    lists:flatten(mergeFold(0,lists:reverse(index()),merge(),Parameters)).
-
-run([])           -> io:format("Digital Library Publishing System ~n"),
+run([])           -> io:format("PUB Tibetan Digital Library Publishing System ~n"),
                      io:format("Copyright (c) Longchen Nyingthig Ukraine ~n"),
                      io:format("~n"),
                      io:format("Usage:~n"),
-                     io:format("       pub i          -- print TBRC index~n"),
-                     io:format("       pub dump       -- dump Erlang merged scan/index~n"),
-                     io:format("       pub s          -- display everything, actual with sizes~n"),
-                     io:format("       pub u          -- not synced, show 'to download' list~n"),
-                     io:format("       pub d          -- available on disk (directory scan)~n"),
+                     io:format("       pub i          -- print meta index~n"),
+                     io:format("       pub s          -- meta index with sizes for available volumes~n"),
+                     io:format("       pub d          -- show only available volumes (filesystem tree output)~n"),
+                     io:format("       pub u          -- show only unavailable volumes that should be downloaded~n"),
+                     io:format("       pub f <text>   -- search in everything~n"),
+                     io:format("       pub fd <text>  -- search in available~n"),
+                     io:format("       pub dump       -- dump meta index in Erlang format~n"),
                      io:format("       pub repl       -- REPL~n"),
-                     io:format("       pub f <text>   -- search in index~n"),
                      io:format("       pub tex <file> -- publish TeX file~n"),
-                     io:format("       pub tex        -- publish folder with TeX, DCT, TXT~n"),
+                     io:format("       pub tex        -- publish folder with TeX, PDF, TibetDoc, TXT files~n"),
                      false;
-run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
-run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
-run(["i"|_]=P)    -> fold(0,index(),     output(),[]),    false;
-run(["u"|_]=P)    -> fold(0,merge(["s"]),output(),["u"]), false;
-run(["s"|_]=P)    -> fold(0,merge(["s"]),output(),[]),    false;
-run(["fu",S])     -> fold(0,fold(0,merge(["u"]),search(),S),output(),["u"]), false;
-run(["fs",S])     -> fold(0,fold(0,merge(["s"]),search(),S),output(),[]),    false;
-run(["fi",S])     -> fold(0,fold(0,index(),     search(),S),output(),[]),    false;
+run(["i"|_])      -> fold(0,index(),     output(),[]),    false;
+run(["u"|_])      -> fold(0,merge(["u"]),output(),["u"]), false;
+run(["s"|_])      -> fold(0,merge(["s"]),output(),[]),    false;
 run(["d"])        -> fold(0,index(),cache(),[]), fold(0,mergeFold(0,scan(),merge(),[]),output(),[]), false;
+run(["fi",S])     -> fold(0,fold(0,index(),      search(),S),output(),[]),    false;
+run(["fu",S])     -> fold(0,fold(0,merge(["u"]), search(),S),output(),["u"]), false;
+run(["f",S])      -> fold(0,fold(0,merge(["s"]), search(),S),output(),[]),    false;
 run(["fd",S])     -> fold(0,index(),cache(),[]), fold(0,fold(0,mergeFold(0,scan(),merge(),[]),search(),S),output(),[]), false;
 run(["repl"])     -> mad_repl:main([],[]);
+run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
+run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
 run(["tex",File]) -> publish([File]), false.
 
-ver(Versions)     -> string:join(unver(Versions),"").
-unver(Versions)   -> lists:foldl(fun ({ver,Work,_},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
-                                     ({ver,Work,_},Acc) when is_list(Work) -> [ver(Work)|Acc];
-                                             (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
-                                             (Work,Acc) when is_list(Work) -> Acc end,[],Versions).
+% Cache Combinators
 
-indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
+cache()  -> {fun cacheCat/3,  fun cachePub/3}.
+cacheCat(_,{cat,Name,_,_,_}=Cat,_)     -> ets:insert(fs,setelement(2,Cat,Name)).
+cachePub(_,{pub,Name,_,_,_,_,_}=Pub,_) -> ets:insert(fs,setelement(2,Pub,atom_to_list(Name))).
 
+% Merge Combinators
+
+merge()  -> {fun mergeCat/3,  fun mergePub/3}.
 lookup(Key) ->
     Res = ets:lookup(fs,Key),
     case Res of
@@ -170,11 +170,8 @@ lookup(Key) ->
          [Value] -> Value;
          Values -> Values end.
 
-cacheCat(_,{cat,Name,_,_,_}=Cat,_)     -> ets:insert(fs,setelement(2,Cat,Name)).
-cachePub(_,{pub,Name,_,_,_,_,_}=Pub,_) -> ets:insert(fs,setelement(2,Pub,atom_to_list(Name))).
-
-mergeCat(_,{cat,Name,_,_,_}=Cat,P) -> Cat.
-mergePub(_,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
+mergeCat(_,{cat,_Name,_,_,_}=Cat,_) -> Cat.
+mergePub(_,{pub,Name,_SizeNum,_Wylie,_Path,_Desc,_Ver}=Pub,_Parameters) ->
     Cache = lookup(atom_to_list(Name)),
     case Cache of
          undefined -> Pub;
@@ -182,10 +179,16 @@ mergePub(_,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
                            {_,_} -> setelement(3,Pub,element(3,Cache));
                                _ -> setelement(3,Cache,element(3,Pub)) end end.
 
+% Output Fold Combinators
+
+output() -> {fun outputCat/3, fun outputPub/3}.
+indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
+ver(Versions) -> string:join(unver(Versions),"").
+
 outputCat(Depth,{cat,Name,_Desc,_Path,_List},_) ->
     indent(Depth),
     io:format("+-- ~s~n",[to_list(Name)]), [].
-outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
+outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
     case SizeNum of
          {Size,Num} -> case Parameters of
                             ["u"] -> skip;
@@ -196,30 +199,36 @@ outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
                        io:format("+-- ~s ~w ~ts ~s~n",
                        [Name,Num,wylie:tibetan(Wylie),ver(Ver)]), [] end.
 
+% Seacrh Fold Combinators
+
+search() -> {fun searchCat/3, fun searchPub/3}.
 lower(X) -> string:to_lower(X).
 has(X,Y) -> string:str(X,Y).
+unver(Versions) -> lists:foldl(fun ({ver,Work,_},Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                   ({ver,Work,_},Acc) when is_list(Work) -> [ver(Work)|Acc];
+                                           (Work,Acc) when is_atom(Work) -> [to_list(Work)|Acc];
+                                           (Work,Acc) when is_list(Work) -> Acc end,[],Versions).
 
 searchCat(_,{cat,Name,Desc,Path,_List},S) ->
     case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc]]) of
          0 -> [];
          _ -> [{cat,Name,Desc,Path,[]}] end.
-searchPub(_,{pub,Name,_Num,Wylie,_Path,Desc,Ver}=Pub,S) when is_integer(_Num) andalso S == ["u"] -> [];
+searchPub(_,{pub,_Name,_Num,_Wylie,_Path,_Desc,_Ver},S) when is_integer(_Num) andalso S == ["u"] -> [];
 searchPub(_,{pub,Name,_Num,Wylie,Path,Desc,Ver}=Pub,S) ->
     case lists:sum([has(lower(X),lower(S))||X<-[to_list(Name),Desc,Wylie,Path]++unver(Ver)]) of
          0 -> [];
          _ -> [Pub] end.
 
+% Known Folds
+
 fold(Depth,List,{Fun1,Fun2},S) ->
     lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> lists:flatten([[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]|Acc]);
-                   ({ver,_,_},Acc)             -> Acc;
                    ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc] end, [], List).
 
 mergeFold(Dep,List,{Fun1,Fun2},S) ->
-    lists:foldl(fun({cat,N,D,P,L}=Cat,Acc)     -> [Fun1(Dep,{cat,N,D,P,mergeFold(Dep,lists:reverse(L),{Fun1,Fun2},S)},S)|Acc];
-                   ({ver,_,_},Acc)             -> Acc;
+    lists:foldl(fun({cat,N,D,P,L},Acc)         -> [Fun1(Dep,{cat,N,D,P,mergeFold(Dep,lists:reverse(L),{Fun1,Fun2},S)},S)|Acc];
                    ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Dep,Pub,S)|Acc] end, [], List).
 
-path(Dep,List,Acc) ->
-    lists:foldl(fun({cat,N,D,P,L}=Cat,Acc)     -> [{cat,N,D,P,path([N|Dep],lists:reverse(L),Acc)}|Acc];
-                   ({ver,_,_},Acc)             -> Acc;
+path(Dep,List,_) ->
+    lists:foldl(fun({cat,N,D,P,L},Acc)         -> [{cat,N,D,P,path([N|Dep],lists:reverse(L),Acc)}|Acc];
                    ({pub,_,_,_,_,_,_}=Pub,Acc) -> [setelement(5,Pub,hd(Dep))|Acc] end, [], List).
