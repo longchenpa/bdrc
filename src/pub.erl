@@ -97,6 +97,7 @@ tex(Folder,Name) ->
 
 tex2(F,Ext) -> filename:basename(F, ".tex") ++ Ext.
 
+
 publish(Files) ->
     io:format("Current Directory: ~p~n",[mad_utils:cwd()]),
     [ begin
@@ -217,13 +218,41 @@ htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) when Depth > 0 -> skip;
 htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) ->
     io:format("~ts~n",[nitro:render(#h2{style="font-size:16pt;margin-top:-10px;padding-bottom:40px;",
                                       body=Name ++ " — <span class=ti>" ++ wylie:tibetan(Wylie) ++ "</span>"})]).
-htmlPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
+htmlPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
     Style = "margin-left:80px;margin-top:-40px;padding-bottom:30px;",
     {GB,S} = case SizeNum of
          {Size,Num} -> {io_lib:format(" ~w:[~s] ",[Num,to_list(Size)]),Style};
               Num   -> {io_lib:format(" ~w ",[Num]),Style++"color:gray;"} end,
+    card(Pub),
+    {ver,V,_} = hd(Ver),
     io:format("~ts",[nitro:render(#h3{style=S,
-              body=atom_to_list(Name)  ++ GB ++ " — <span class=ti>"++ wylie:tibetan(Wylie) ++"</span> " ++ ver(Ver) ++ "<br>"})]).
+              body=[#link{body=atom_to_list(Name),href=ver2file(V)},GB ++ " — <span class=ti>"++
+                  wylie:tibetan(Wylie) ++"</span> " ++ ver(Ver) ++ "<br>"]})]).
+
+ver2file(V) ->
+    FileName = "tbrc/" ++ atom_to_list(case V of V when is_list(V) -> hd(V); A -> A end) ++ ".htm".
+
+card({pub,'',SizeNum,Wylie,_Path,Desc,Ver}) -> skip;
+card({pub,Name,SizeNum,Wylie,_Path,Desc,Ver}) ->
+    {ok,Bin} = mad_repl:load_file("priv/card.htx"),
+    Header = unicode:characters_to_list(Bin),
+    GB = case SizeNum of
+         {Size,Num} -> io_lib:format(" Volumes: ~w<br>Size: ~s<br>",[Num,to_list(Size)]);
+              Num   -> io_lib:format(" Volumes: ~w<br>",[Num]) end,
+    S = nitro:render([#h1{body=[#b{style="font-size: 28pt;",body=atom_to_list(Name)},#br{},#br{},
+                                #b{style="font-size: 24pt;",body=#span{class=ti,body=wylie:tibetan(Wylie)}},#br{}]},
+                      #b{style="font-size: 16pt;",body=[GB++"Versions: "++ver(Ver)]},
+                      #br{},
+                      #br{},
+                      #panel{style="font-size:14pt;",body=Desc}
+                      ]),
+    Sep = "</td></tr><tr><td colspan=1 width=150 valign=top>&nbsp;</td><td colspan=3 valign=top><br><pre style='font-size:20pt;'>",
+    Fin = "</pre></td></tr></table></body></html>",
+    [ begin
+       File = io_lib:format("~ts~n",[Header++S++Sep++Fin]),
+       FileName = ver2file(V),
+       file:write_file(FileName,unicode:characters_to_binary(File))
+    end || {ver,V,_} <- Ver].
 
 % Seacrh Fold Combinators
 
