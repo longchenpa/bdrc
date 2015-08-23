@@ -1,3 +1,8 @@
+-module(index).
+-compile(export_all).
+
+meta() ->
+
 [ { cat, "CANON", "", '/', [
 
         { pub,  'Gyud Chudun', 2, "rnying ma rgyud bcu bdun", '/',

@@ -13,7 +13,10 @@ merge(Parameters) ->
 
 % Index
 
-index() -> {ok,[L]} = file:consult("index.erl"), lists:reverse(path([],L,[])).
+index() ->
+    case file:consult("index.erl") of
+         {ok,[L]} -> lists:reverse(path([],L,[]));
+                _ -> lists:reverse(path([],index:meta(),[])) end.
 
 % Directory Scan
 
@@ -223,12 +226,15 @@ searchPub(_,{pub,Name,_Num,Wylie,Path,Desc,Ver}=Pub,S) ->
 
 fold(Depth,List,{Fun1,Fun2},S) ->
     lists:foldl(fun({cat,_,_,_,L}=Cat,Acc)     -> lists:flatten([[Fun1(Depth,Cat,S)|fold(Depth+1,L,{Fun1,Fun2},S)]|Acc]);
-                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc] end, [], List).
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Depth,Pub,S)|Acc];
+                                       (_,Acc) -> Acc end, [], List).
 
 mergeFold(Dep,List,{Fun1,Fun2},S) ->
     lists:foldl(fun({cat,N,D,P,L},Acc)         -> [Fun1(Dep,{cat,N,D,P,mergeFold(Dep,lists:reverse(L),{Fun1,Fun2},S)},S)|Acc];
-                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Dep,Pub,S)|Acc] end, [], List).
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [Fun2(Dep,Pub,S)|Acc];
+                                       (_,Acc) -> Acc end, [], List).
 
 path(Dep,List,_) ->
     lists:foldl(fun({cat,N,D,P,L},Acc)         -> [{cat,N,D,P,path([N|Dep],lists:reverse(L),Acc)}|Acc];
-                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [setelement(5,Pub,hd(Dep))|Acc] end, [], List).
+                   ({pub,_,_,_,_,_,_}=Pub,Acc) -> [setelement(5,Pub,hd(Dep))|Acc];
+                                       (_,Acc) -> Acc end, [], List).
