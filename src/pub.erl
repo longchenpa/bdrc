@@ -137,6 +137,7 @@ run([])           -> io:format("PUB Tibetan Digital Library Publishing System ~n
                      io:format("       pub s          -- meta index with sizes for available volumes~n"),
                      io:format("       pub d          -- show only available volumes (filesystem tree output)~n"),
                      io:format("       pub u          -- show only unavailable volumes that should be downloaded~n"),
+                     io:format("       pub h          -- print HTML index~n"),
                      io:format("       pub f <text>   -- search in everything~n"),
                      io:format("       pub fd <text>  -- search in available~n"),
                      io:format("       pub w <file>   -- EWTS wylie file transcoding~n"),
