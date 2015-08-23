@@ -139,6 +139,7 @@ run([])           -> io:format("PUB Tibetan Digital Library Publishing System ~n
                      io:format("       pub u          -- show only unavailable volumes that should be downloaded~n"),
                      io:format("       pub f <text>   -- search in everything~n"),
                      io:format("       pub fd <text>  -- search in available~n"),
+                     io:format("       pub w <file>   -- EWTS wylie file transcoding~n"),
                      io:format("       pub dump       -- dump meta index in Erlang format~n"),
                      io:format("       pub repl       -- REPL~n"),
                      io:format("       pub tex <file> -- publish TeX file~n"),
@@ -152,6 +153,7 @@ run(["fi",S])     -> fold(0,fold(0,index(),      search(),S),output(),[]),    fa
 run(["fu",S])     -> fold(0,fold(0,merge(["u"]), search(),S),output(),["u"]), false;
 run(["f",S])      -> fold(0,fold(0,merge(["s"]), search(),S),output(),[]),    false;
 run(["fd",S])     -> fold(0,index(),cache(),[]), fold(0,fold(0,mergeFold(0,scan(),merge(),[]),search(),S),output(),[]), false;
+run(["w",F])      -> {ok,Bin} = file:read_file(F), io:format("~ts~n",[wylie:tibetan(binary_to_list(Bin))]);
 run(["repl"])     -> mad_repl:main([],[]);
 run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
