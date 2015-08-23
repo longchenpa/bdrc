@@ -3,7 +3,7 @@
 
 meta() ->
 
-[ { cat, "CANON", "", '/', [
+[ { cat, "Canon", "", "gzhung po ti", [
 
         { pub,  'Gyud Chudun', 2, "rnying ma rgyud bcu bdun", '/',
                 "A reproduction of an ancient manuscript from Spiti of a collection of rnying "
@@ -77,7 +77,7 @@ meta() ->
                 [ { ver, 'W21519', "577-584" } ] }
 
 ]},
-{ cat, "NYINGMA", "", '/', [
+{ cat, "Nyingma", "", "rnying ma", [
 
         { pub,  'Adzom Drukpa', 1, "a 'dzom 'gro 'dul dpa' bo rdo rje'i gsung 'bum", '/',
                 "Collected Works by Nyingma master Adzom Drugpa Drodul Pawo Dorje (1842-1924).",
@@ -247,10 +247,10 @@ meta() ->
                 "from Namtse Monastery in Sikkim. W23433",
                 [ { ver, 'W23433', "1685" } ] },
 
-        { cat,  "klong chen pa'i gsung skor",
+        { cat,  "Longchenpa Sungkor",
                 "One of the greatest philosophers of the Tibetan tradition was Longchen Rabjampa "
                 "Drime Ozer (1308-1364). Few of his works survive but some of the greatest are the four "
-                "collections included in this library.", '/', [
+                "collections included in this library.", "klong chen pa'i gsung skor", [
 
                 { pub,  'Longchenpa Dzo Dun', 7, "mdzod bdun", '/',
                         "Seven great philosophical masterpieces of the famed Nyingma philosopher,"
@@ -604,7 +604,7 @@ meta() ->
                 [ { ver, 'W20869', "0334-0358" } ] }
 
 ]},
-{ cat, "RIME", "", '/', [
+{ cat, "Rime", "", "ris med", [
 
         { pub,  'Chokgyur Lingpa', 39, "mchog 'gyur gling pa'i gter gsar", '/',
                 "Chogyur Dechen Lingpa (1829-1870) was one of a Nyingma terton whose "
@@ -658,7 +658,7 @@ meta() ->
                 "Commentary on the Hevajratantra by Jamgon Kongtrul Lotro Taye (1813-1899)",
                 [ { ver, 'W20866', "1716" } ] }
 ]},
-{cat, "GELUG", "", '/', [
+{cat, "Gelug", "", "dge lugs", [
 
         { pub,  'Kadam Chojung', 2, "bka' gdams chos 'byung gsal ba'i sgron me", '/',
                 "History of the Kadampa order in Tibet. "
@@ -869,7 +869,7 @@ meta() ->
                   { ver, 'W23692', "0708-0715" },
                   { ver, 'W23693', "0692-0707" } ] },
 
-        { pub,  '', 4, "blo bzang ye shes, pan chen", '/',
+        { pub,  '', 4, "blo bzang ye shes pan chen", '/',
                 "Collected writings of a Gelug master, the Second Panchen Lobzang Yeshe (1662-1737)",
                 [ { ver, 'W01174', "1794, 1793, 1792, 1791" } ] },
 
@@ -914,7 +914,7 @@ meta() ->
 
 
 ]},
-{ cat, "SAKYA", "", '/', [
+{ cat, "Sakya", "", "sa skya", [
 
         { pub,  '', 18, "sa skya bka' 'bum + kha skong", '/',
                 "The printing blocks for the first 15 volumes of the collected writings of the first "
@@ -997,7 +997,7 @@ meta() ->
                 [ { ver, 'W1934', "734-761" } ] }
 
 ]},
-{ cat, "MARPA KAGYU", "", '/', [
+{ cat, "Marpa Kagyu", "", "mar pa bka' brgyud", [
 
         { pub,  '', 6, "dpal 'brug pa'i lugs kyi dbang chog 'dod rgu'i bang mdzod", '/',
                 "Collection of initiation texts of the Drukpa Kagyu order. ",
@@ -1245,7 +1245,7 @@ meta() ->
                 [ { ver, 'W20876', "1534-1541" } ] }
 
 ]},
-{ cat, "SHANGPA KAGYU", "", '/', [
+{ cat, "Shangpa Kagyu", "", "shangs pa bka' brgyud", [
 
         { pub,  '', 2, "shangs pa bka' brgyud rnam thar dang chos skor", '/',
                 "Reproduction of a rare set of manuscripts from Sumra containing "
@@ -1267,7 +1267,7 @@ meta() ->
                 [ { ver, 'W23918', "3513-3515" } ] }
 
 ]},
-{ cat, "ZHIJE and CHOD", "", '/', [
+{ cat, "Zhije and Chod", "", "zhi byed gcod", [
 
         { pub,  '', 4, "thang stong rgyal po'i ma gcig gsang gcod", '/',
                 "Collection of teachings on the Cho practice of the Machig "
@@ -1282,7 +1282,7 @@ meta() ->
                 [ { ver, 'W23993', "3605" } ] }
 
 ]},
-{ cat, "JONANG", "", '/', [
+{ cat, "Jonang", "", "jo nang", [
 
         { pub,  '', 8, "kun mkhyen dol po pa shes rab rgyal mtshan", '/',
                 "Collected works of the founder of the Jonang tradition, Dolpopa Sherab Gyaltsen "

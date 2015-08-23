@@ -146,6 +146,11 @@ run([])           -> io:format("PUB Tibetan Digital Library Publishing System ~n
                      io:format("       pub tex        -- publish folder with TeX, PDF, TibetDoc, TXT files~n"),
                      false;
 run(["i"|_])      -> fold(0,index(),     output(),[]),    false;
+run(["h"|_])      -> mad_repl:load(),
+                     {ok,Bin} = mad_repl:load_file("priv/dpe.tshogs.htx"),
+                     io:format("~ts~n",[unicode:characters_to_list(Bin)]),
+                     fold(0,merge(["s"]),     htmlOutput(),[]),
+                     io:format("~n~s~n",["</td></tr></table></body></html>"]),false;
 run(["u"|_])      -> fold(0,merge(["u"]),output(),["u"]), false;
 run(["s"|_])      -> fold(0,merge(["s"]),output(),[]),    false;
 run(["d"])        -> fold(0,index(),cache(),[]), fold(0,mergeFold(0,scan(),merge(),[]),output(),[]), false;
@@ -190,9 +195,9 @@ output() -> {fun outputCat/3, fun outputPub/3}.
 indent(Depth) -> [ io:format("|   ") || _ <- lists:seq(1,Depth) ].
 ver(Versions) -> string:join(unver(Versions),"").
 
-outputCat(Depth,{cat,Name,_Desc,_Path,_List},_) ->
+outputCat(Depth,{cat,Name,_Desc,Wylie,_List},_) ->
     indent(Depth),
-    io:format("+-- ~s~n",[to_list(Name)]), [].
+    io:format("+-- ~s ~ts ~n",[to_list(Name),wylie:tibetan(Wylie)]), [].
 outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
     case SizeNum of
          {Size,Num} -> case Parameters of
@@ -203,6 +208,21 @@ outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
               Num   -> indent(Depth),
                        io:format("+-- ~s ~w ~ts ~s~n",
                        [Name,Num,wylie:tibetan(Wylie),ver(Ver)]), [] end.
+
+% HTML output
+
+htmlOutput() -> {fun htmlCat/3, fun htmlPub/3}.
+htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) when Depth > 0 -> skip;
+htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) ->
+    io:format("~ts~n",[nitro:render(#h2{style="font-size:16pt;margin-top:-10px;padding-bottom:40px;",
+                                      body=Name ++ " — <span class=ti>" ++ wylie:tibetan(Wylie) ++ "</span>"})]).
+htmlPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
+    Style = "margin-left:80px;margin-top:-40px;padding-bottom:30px;",
+    {GB,S} = case SizeNum of
+         {Size,Num} -> {io_lib:format(" ~w:[~s] ",[Num,to_list(Size)]),Style};
+              Num   -> {io_lib:format(" ~w ",[Num]),Style++"color:gray;"} end,
+    io:format("~ts",[nitro:render(#h3{style=S,
+              body=atom_to_list(Name)  ++ GB ++ " — <span class=ti>"++ wylie:tibetan(Wylie) ++"</span> " ++ ver(Ver) ++ "<br>"})]).
 
 % Seacrh Fold Combinators
 
