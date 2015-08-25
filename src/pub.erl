@@ -142,7 +142,8 @@ run([])           -> io:format("PUB Tibetan Digital Library Publishing System \r
                      io:format("       pub d          -- show only available volumes (filesystem tree output)\r\n"),
                      io:format("       pub u          -- show only unavailable volumes that should be downloaded\r\n"),
                      io:format("       pub h          -- print HTML index\r\n"),
-                     io:format("       pub i <file>   -- import TBRC index from file\r\n"),
+                     io:format("       pub t <file>   -- import TBRC index from file by authors\r\n"),
+                     io:format("       pub tp <file>  -- import plain TBRC index from file\r\n"),
                      io:format("       pub f <text>   -- search in everything\r\n"),
                      io:format("       pub fd <text>  -- search in available\r\n"),
                      io:format("       pub ft <f> <s> -- search in TBRC index\r\n"),
@@ -160,7 +161,8 @@ run(["h"|_])      -> mad_repl:load(),
                      io:format("~n~s~n",["</td></tr></table></body></html>"]),false;
 run(["u"|_])      -> fold(0,merge(["u"]),output(),["u"]), false;
 run(["s"|_])      -> fold(0,merge(["s"]),output(),[]),    false;
-run(["t"|F])      -> V = fold(0,scan:tbrc_scan(F),output(),[]), io:format("Total Volumes: ~p~n",[lists:sum(V)]), false;
+run(["t"|F])      -> V = fold(0,scan:tbrc_authors(F),output(),[]), io:format("Total Volumes: ~p~n",[lists:sum(V)]), false;
+run(["tp"|F])     -> V = fold(0,scan:tbrc_plain(F),output(),[]), io:format("Total Volumes: ~p~n",[lists:sum(V)]), false;
 run(["d"])        -> fold(0,index(),cache(),[]), fold(0,mergeFold(0,scan(),merge(),[]),output(),[]), false;
 run(["fi",S])     -> fold(0,fold(0,index(),      search(),S),output(),[]),    false;
 run(["ft",F,S])   -> fold(0,fold(0,scan:tbrc_scan(F),search(),S),output(),[]),  false;
