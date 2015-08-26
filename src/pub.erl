@@ -157,7 +157,8 @@ run(["i"|_])      -> fold(0,index(),     output(),[]),    false;
 run(["h"|_])      -> mad_repl:load(),
                      {ok,Bin} = mad_repl:load_file("priv/dpe.tshogs.htx"),
                      io:format("~ts~n",[unicode:characters_to_list(Bin)]),
-                     fold(0,merge(["s"]),     htmlOutput(),[]),
+                     Test = merge(["s"]),
+                     fold(0,Test, htmlOutput(),[]),
                      io:format("~n~s~n",["</td></tr></table></body></html>"]),false;
 run(["u"|_])      -> fold(0,merge(["u"]),output(),["u"]), false;
 run(["s"|_])      -> fold(0,merge(["s"]),output(),[]),    false;
@@ -222,19 +223,24 @@ outputPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver},Parameters) ->
 
 % HTML output
 
+disableHTML() -> ["Marpa Kagyu","Shangpa Kagyu","Zhije and Chod","Gelug","Sakya","Jonang"].
+
 htmlOutput() -> {fun htmlCat/3, fun htmlPub/3}.
-htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) when Depth > 0 -> skip;
-htmlCat(Depth,{cat,Name,_Desc,Wylie,_List},_) ->
+htmlCat(Depth,{cat,Name,_,_,_}=Cat,P) -> case lists:member(Name,disableHTML()) of true -> skip; _ -> htmlCat2(Depth,Cat,P) end.
+htmlPub(Depth,{pub,_,_,_,_Path,_,_}=Pub,Parameters) -> case lists:member(_Path,disableHTML()) of true -> skip; _ -> htmlPub2(Depth,Pub,Parameters) end.
+
+htmlCat2(Depth,{cat,Name,_Desc,Wylie,_List},_) when Depth > 0 -> skip;
+htmlCat2(Depth,{cat,Name,_Desc,Wylie,_List},_) ->
     io:format("~ts~n",[nitro:render(#h2{style="font-size:16pt;margin-top:-10px;padding-bottom:40px;",
                                       body=Name ++ " — <span class=ti>" ++ wylie:tibetan(Wylie) ++ "</span>"})]).
-htmlPub(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
+htmlPub2(Depth,{pub,Name,SizeNum,Wylie,_Path,_Desc,Ver}=Pub,Parameters) ->
     Style = "margin-left:80px;margin-top:-40px;padding-bottom:30px;",
     {GB,S} = case SizeNum of
          {Size,Num} -> {io_lib:format(" ~w:[~s] ",[Num,to_list(Size)]),Style};
               Num   -> {io_lib:format(" ~w ",[Num]),Style++"color:gray;"} end,
     card(Pub),
     {ver,V,_} = hd(Ver),
-    io:format("~ts",[nitro:render(#h3{style=S,
+    io:format("~ts~n",[nitro:render(#h3{style=S,
               body=[#link{body=atom_to_list(Name),href=ver2file(V)},GB ++ " — <span class=ti>"++
                   wylie:tibetan(Wylie) ++"</span> " ++ ver(Ver) ++ "<br>"]})]).
 

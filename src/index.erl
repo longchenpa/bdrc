@@ -649,7 +649,7 @@ meta() ->
                 "Kagyu; the Shiche and Cho; the Kalachakra; and the Ugyen Nyendrub.",
                 [ { ver, 'W20877', "0132-0149" } ] },
 
-        { pub,  '', 1, "rgyud bla ma'i 'grel chen", '/',
+        { pub,  'Gyud Lama Drelchen', 1, "rgyud bla ma'i 'grel chen", '/',
                 "Commentary on the Uttaratantra or Ratnagotravibhaga by "
                 "Jamgon Kontrul Lotro Taye (1813-1893)",
                 [ { ver, 'W21961', "1715" } ] },
