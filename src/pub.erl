@@ -166,11 +166,12 @@ run(["t"|F])      -> V = fold(0,scan:tbrc_authors(F),output(),[]), io:format("To
 run(["tp"|F])     -> V = fold(0,scan:tbrc_plain(F),output(),[]), io:format("Total Volumes: ~p~n",[lists:sum(V)]), false;
 run(["d"])        -> fold(0,index(),cache(),[]), fold(0,mergeFold(0,scan(),merge(),[]),output(),[]), false;
 run(["fi",S])     -> fold(0,fold(0,index(),      search(),S),output(),[]),    false;
-run(["ft",F,S])   -> fold(0,fold(0,scan:tbrc_scan(F),search(),S),output(),[]),  false;
+run(["ft",F,S])   -> fold(0,fold(0,scan:tbrc_authors(F),search(),S),output(),[]),  false;
 run(["fu",S])     -> fold(0,fold(0,merge(["u"]), search(),S),output(),["u"]), false;
 run(["f",S])      -> fold(0,fold(0,merge(["s"]), search(),S),output(),[]),    false;
 run(["fd",S])     -> fold(0,index(),cache(),[]), fold(0,fold(0,mergeFold(0,scan(),merge(),[]),search(),S),output(),[]), false;
 run(["w",F])      -> {ok,Bin} = file:read_file(F), io:format("~ts~n",[wylie:tibetan(binary_to_list(Bin))]);
+run(["fix",F])    -> {ok,Bin} = file:read_file(F), io:format("~ts~n",[c1251:decode(unicode:characters_to_list(Bin))]);
 run(["repl"])     -> mad_repl:main([],[]);
 run(["dump"])     -> io:format("~p~n",[scan(mad_utils:cwd(),[])]), false;
 run(["tex"])      -> publish(mad_repl:wildcards(["*.tex"])), false;
@@ -306,3 +307,4 @@ path(Dep,List,_) ->
     lists:foldl(fun({cat,N,D,P,L},Acc)         -> [{cat,N,D,P,path([N|Dep],lists:reverse(L),Acc)}|Acc];
                    ({pub,_,_,_,_,_,_}=Pub,Acc) -> [setelement(5,Pub,hd(Dep))|Acc];
                                        (_,Acc) -> Acc end, [], List).
+
