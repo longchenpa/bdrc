@@ -73,14 +73,17 @@ ext("txt") -> "TXT UTF-8";
 ext("dct") -> "TibetDoc".
 
 menu(File,Author) ->
+   {[A,B,C|_],L} = case lists:reverse(string:tokens(os:cmd("pwd"),"\n/")) of
+               ["texts",X,Y,Z|_] -> {[X,Y,Z],""};
+               [_,"texts",X,Y,Z|_] -> {[X,Y,Z],"../"} end,
    Files = mad_repl:wildcards([tex2(File,".{htm,pdf,txt,dct}")]),
    #panel{id=navcontainer,
           style="margin-top:-8px;margin-left:-8px;margin-right:-8px;border-bottom:1px solid;",
           body=[#ul{id=nav,
                    body=[#li{body=[#link{href="#",body="Navigation"},
-                                   #ul{body=[#li{body=#link{href="../../../index.htm",body="Nyingma"}},
-                                             #li{body=#link{href="../../../ka.thog/index.htm",body="Kathog"}},
-                                             #li{body=#link{href="../index.htm",body="Nyingthig Tsapod"}}]}]},
+                                   #ul{body=[#li{body=#link{href=L++"../../../index.html",body=C}},
+                                             #li{body=#link{href=L++"../../index.htm", body=B}},
+                                             #li{body=#link{href=L++"../index.htm", body=A}}]}]},
                          #li{body=[#link{href="#",body="Download"},
                                    #ul{body=
                                    [ #li{body=#link{href=F,
