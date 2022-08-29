@@ -258,9 +258,9 @@ card({pub,Name,SizeNum,Wylie,_Path,Desc,Ver}) ->
     GB = case SizeNum of
          {Size,Num} -> io_lib:format(" Volumes: ~w<br>Size: ~s<br>",[Num,to_list(Size)]);
               Num   -> io_lib:format(" Volumes: ~w<br>",[Num]) end,
-    S = nitro:render([#h1{body=[#b{style="font-size: 28pt;",body=atom_to_list(Name)},#br{},#br{},
-                                #b{style="font-size: 24pt;",body=#span{class=ti,body=wylie:tibetan(Wylie)}},#br{}]},
-                      #b{style="font-size: 16pt;",body=[GB++"Versions: "++ver(Ver)]},
+    S = nitro:render([#h1{body=[#span{style="font-size: 28pt;",body=atom_to_list(Name)},#br{},#br{},
+                                #span{style="font-size: 24pt;",body=#span{class=ti,body=wylie:tibetan(Wylie)}},#br{}]},
+                      #span{style="font-size: 16pt;",body=[GB++"Versions: "++ver(Ver)]},
                       #br{},
                       #br{},
                       #panel{style="font-size:14pt;",body=Desc}
